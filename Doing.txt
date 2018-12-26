@@ -1,0 +1,2 @@
+Doing:
+- In write_lines : Detect x,y then calculate angle and direction

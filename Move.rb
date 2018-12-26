@@ -5,7 +5,7 @@ class Move
   OUTPUT_JS_FILE = 'output.js'.freeze
 
   # Constructor
-  # number_lines = number of lines dedicated to the animation
+  # number_lines = number of lines dedicated to the animation // to be done by Main
   # x, y = initial position
   def initialize(number_lines, path_to_SVG_FILE, window_width: 1000, window_height: 600, x: 0, y: 0)
     @number_lines = number_lines
@@ -52,16 +52,19 @@ class Move
       angle = 90 * i
       file.write("image.moveToAndRotation(#{a}, #{angle});\n")
     end
+
   end
 
 
   # Method which handles the main process to create the JavaScript file
   def main
+    #Initialize the file
     file = File.open(OUTPUT_JS_FILE, 'w+')
     file.write("import {Move} from './move.js';\n\n")
     file.write("var image = new Move('#{@x}' ,'#{@y}', '#{@path_svg}', #{@window_width}, #{@window_height},
                     '#{@svg_width}', '#{@svg_height}');\n\n")
 
+    #handle animations
     write_lines(file)
 
   rescue IOError => e
