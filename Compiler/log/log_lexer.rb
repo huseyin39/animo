@@ -4,10 +4,9 @@ module Log_lexer
       super
       keyword 'start'
       keyword 'end'
-      keyword 'nsS'
-      keyword 'µS'
-      keyword 'ms'
-      keyword 's'
+      keyword 'µsec'
+      keyword 'msec'
+      keyword 'sec'
 
     end
   end
