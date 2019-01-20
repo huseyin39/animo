@@ -1,16 +1,23 @@
 Terminals symbols: 
-	- 'start', 'end', 'msec', 'sec', ';', ':', '(', ')', 'move' //write the other actions
+	- 'begin', 'end', 'msec', 'sec', ';', ':', '(', ')', 'move' //write the other actions
 
 Nonterminals symbols:
 	- Program (start symbol), Body, Timestamp, Time-Value, Unit, Identifier, Action, Parameter-Value
 Productio rules :
 
-Program ::= start Body end
-Body ::= Identifier Action Parameter-Value
+Program ::= begin Body end
+Body ::= Identifier Action '('Parameter-Value')'
 Identifier ::= Letter (Letter|[0-9])*
-Parameter-Value ::= Letter Parameter-Value | [0-9] Parameter-Value| E
-Actio ::= move | 
+Parameter-Value ::= Letter Parameter-Value | [0-9] Parameter-Value| E(empty)
+Action ::= move | 
 Timestamp ::= Time-Value Unit
 Time-Value ::= [1-9][0-9]*
 Unit ::= sec | msec
 Letter ::= [a-z][A-Z]
+
+
+
+
+example:
+
+2 s : robot_test moved (2,3);

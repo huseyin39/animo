@@ -4,7 +4,6 @@ module Log_lexer
       super
       keyword 'start'
       keyword 'end'
-      keyword 'µsec'
       keyword 'msec'
       keyword 'sec'
 
