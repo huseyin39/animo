@@ -3,11 +3,13 @@ Terminals symbols:
 
 Nonterminals symbols:
 	- Program (start symbol), Body, Timestamp, Time-Value, Unit, Identifier, Action, Parameter-Value
-Productio rules :
+Production rules :
 
 Program ::= begin Body end
-Body ::= Identifier Action '('Parameter-Value')'
-Identifier ::= Letter (Letter|[0-9])*
+Body ::= Line+    // = Line [Line]*
+Line ::= Identifier Action '('Parameter')' ';'
+Identifier ::= Letter [Letter|[0-9]|_]*
+Parameter ::= Parameter-Value [','Parameter-Value]*
 Parameter-Value ::= Letter Parameter-Value | [0-9] Parameter-Value| E(empty)
 Action ::= move | 
 Timestamp ::= Time-Value Unit
@@ -21,3 +23,4 @@ Letter ::= [a-z][A-Z]
 example:
 
 2 s : robot_test moved (2,3);
+Pour le moment on peut avoir () : c'est à dire pas de paramètres

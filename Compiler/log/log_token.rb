@@ -1,33 +1,36 @@
 class Token
-  attr_accessor :kind, :value
+  attr_reader :kind, :value
 
-  @INTLITERAL = 1
-  @CHARLITERAL =
-  @ACTION =
-  @IDENTIFIER =   #Pour le nom du robot
-
-  #Reserved words
-  @BEGIN =            #begin
-  @END =               #end
-  @SEC =
-
-
-  @COLON =             #:
-  @SEMICOLON =         #;
-  @LPARENTHESIS =
-  @RPARENTHESIS =
-
-
-
-
-
-  def initialize kind, value
+  def initialize (kind, value)
     @kind = kind
     @value = value
   end
 
-
+  #To check the kind of the currentToken
+  def is_a? kind
+    if @kind == kind
+      return true
+    else
+      raise "Wrong type"
+    end
+  end
 end
 
-a = Token.new 4,5
-puts
+TOKEN_KINDS = {INTLITERAL: 1,
+               CHARLITERAL: 2,
+               ACTION: 3,
+               IDENTIFIER: 4,
+               BEGIN: 5,
+               END: 6,
+               SEC: 7,
+               COLON: 8,
+               SEMICOLON: 9,
+               COMMA: 10,
+               UNDERSCORE: 11,
+               LPARENTHESIS: 12,
+               RPARENTHESIS: 13}
+
+aa = 'lol'
+bb = 'hello'
+
+puts aa.eql? 'la' || 'hello'
