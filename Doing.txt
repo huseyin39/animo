@@ -1,3 +1,7 @@
 Doing:
 - Modèle : dont forget to write the require (e.g. fast_image)
 - In write_lines : Detect x,y then calculate angle and direction
+
+
+ACTION <--> operator
+Integer <--> Integer-Literal

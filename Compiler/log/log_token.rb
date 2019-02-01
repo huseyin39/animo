@@ -16,9 +16,9 @@ class Token
   end
 end
 
-TOKEN_KINDS = {INTLITERAL: 1,
-               CHARLITERAL: 2,
+TOKEN_KINDS = {INTEGER: 2,
                ACTION: 3,
+               PARAMETERVALUE: 3,
                IDENTIFIER: 4,
                BEGIN: 5,
                END: 6,
@@ -30,7 +30,4 @@ TOKEN_KINDS = {INTLITERAL: 1,
                LPARENTHESIS: 12,
                RPARENTHESIS: 13}
 
-aa = 'lol'
-bb = 'hello'
-
-puts aa.eql? 'la' || 'hello'
+puts !('lol'.eql?'la')
