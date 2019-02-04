@@ -4,10 +4,22 @@ class Token
   def initialize (kind, value)
     @kind = kind
     @value = value
+    if (@kind == TOKEN_KINDS[:IDENTIFIER])
+      if @value.eql?('move') #add here the rest
+        @kind = 1
+      else
+        (TOKEN_KINDS[:BEGIN]..TOKEN_KINDS[:SEC]).each do |i|
+          if @value.eql?(VALUE[i])
+            @kind = i
+            break
+          end
+        end
+      end
+    end
   end
 
   #To check the kind of the currentToken
-  def is_a? kind
+  def is_a? kind #unused
     if @kind == kind
       return true
     else
@@ -16,18 +28,18 @@ class Token
   end
 end
 
-TOKEN_KINDS = {INTEGER: 2,
-               ACTION: 3,
-               PARAMETERVALUE: 3,
-               IDENTIFIER: 4,
-               BEGIN: 5,
-               END: 6,
-               SEC: 7,
-               COLON: 8,
-               SEMICOLON: 9,
-               COMMA: 10,
-               UNDERSCORE: 11,
-               LPARENTHESIS: 12,
-               RPARENTHESIS: 13}
+TOKEN_KINDS = {INTEGER: 0,
+               ACTION: 1,
+               PARAMETERVALUE: 2,
+               IDENTIFIER: 3,
+               BEGIN: 4,
+               END: 5,
+               SEC: 6,
+               COLON: 7,
+               SEMICOLON: 8,
+               COMMA: 9,
+               LPARENTHESIS: 10,
+               RPARENTHESIS: 11}
 
-puts !('lol'.eql?'la')
+VALUE = ['<integer>', '<action>', '<parametervalue>', '<identifier>', 'begin', 'end', 'sec', ':', ';', ',', '(', ')']
+

@@ -1,0 +1,15 @@
+require_relative 'log/log_parser'
+require_relative 'log/log_scanner'
+
+
+begin
+  path = File.join(File.dirname(__FILE__), 'test.log')
+  file = File.open(path, 'r')
+  scanner = Scanner.new(file)
+  parser = LogParser.new(scanner)
+  parser.parse
+rescue EOFError
+  puts 'End of File'
+ensure
+  file.close
+end

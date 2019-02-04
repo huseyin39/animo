@@ -18,7 +18,7 @@ Unit ::= sec | msec
 
 Lexical grammar:
 
-Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | )
+Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | ) // | EOT ?
 Action ::= move |
 Parameter_Value ::=  Integer | E(empty)  //For the moment either Integer or nothing (to add such as transit..)
 Identifier ::= Letter [Letter|[0-9]|_]*

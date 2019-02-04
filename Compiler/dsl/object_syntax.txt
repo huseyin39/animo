@@ -1,0 +1,15 @@
+
+
+Program ::= [Line ';']+
+Line ::= Identifier '='  Type ',' '"' Filename '"'
+Type ::= dynamic | data | static
+Filename ::=  Identifier '.svg' (do we allow space) ?
+Identifier ::= Letter [Letter|[0-9]|_]*
+
+Lexical grammar
+
+Token ::=
+
+
+Ex :
+identifier = type, "chemin";

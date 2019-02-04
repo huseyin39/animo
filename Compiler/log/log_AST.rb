@@ -128,15 +128,4 @@ module LogAST
         super(value)
       end
   end
-
-
-
-end
-
-
-bb = 'c'
-
-case bb
-when 'a'..'z'
-  puts 'Done'
 end
