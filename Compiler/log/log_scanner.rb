@@ -70,21 +70,26 @@ class Scanner
 
 
     case @current_char
-    when '='
-      takeIt
-      return TOKEN_KINDS[:EQUAL]
+
+    when ':'
+    takeIt
+    return TOKEN_KINDS[:COLON]
 
     when ';'
-      takeIt
-      return TOKEN_KINDS[:SEMICOLON]
+    takeIt
+    return TOKEN_KINDS[:SEMICOLON]
 
     when ','
-      takeIt
-      return TOKEN_KINDS[:COMMA]
+    takeIt
+    return TOKEN_KINDS[:COMMA]
 
-    when '"'
-      takeIt
-      return TOKEN_KINDS[:DOUBLEQUOTE]
+    when ')'
+    takeIt
+    return TOKEN_KINDS[:RPARENTHESIS]
+
+    when '('
+    takeIt
+    return TOKEN_KINDS[:LPARENTHESIS]
     end
   end
 end

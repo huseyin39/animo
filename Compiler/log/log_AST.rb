@@ -1,28 +1,38 @@
-module LogAST
-  class AST
-  end
+require_relative '../object/object_AST'
+require_relative '../AST'
 
-  class Program < AST
+
+module LogAST
+
+  class ProgramLog < (AbstractSyntaxTree::AST)
     attr_accessor :body
 
     def initialize body
       @body = body
     end
-  end
 
-
-
-  class Body < AST
-    attr_accessor :lines
-
-    def initialize *lines
-      @lines = lines
+    def visit visitor, arg=nil
+      return visitor.visitProgramLog(self, arg)
     end
   end
 
 
 
-  class Line < AST
+  class Body < (AbstractSyntaxTree::AST)
+    attr_accessor :lines
+
+    def initialize lines
+      @lines = lines
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitBody(self, arg)
+    end
+  end
+
+
+
+  class Line < (AbstractSyntaxTree::AST)
   end
 
   class SingleLine < Line
@@ -31,6 +41,10 @@ module LogAST
     def initialize timestamp, description
       @timestamp = timestamp
       @description = description
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitSingleLine(self, arg)
     end
   end
 
@@ -42,31 +56,72 @@ module LogAST
       @line1 = line1
       @line2 = line2
     end
+
+    def visit visitor, arg=nil
+      return visitor.visitSequentialLine(self, arg)
+    end
   end
 
 
 
-  class Timestamp < AST
+  class Timestamp < (AbstractSyntaxTree::AST)
     attr_accessor :integer, :unit
 
     def initialize integer, unit = 'sec'
       @integer= integer
       @unit = unit
     end
+
+    def visit visitor, arg=nil
+      return visitor.visitTimestamp(self, arg)
+    end
   end
 
-  class Description < AST
-    attr_accessor :parameters, :action, :identifier
+  class Description < (AbstractSyntaxTree::AST)
+    attr_accessor :identifier, :action, :parameters
 
     def initialize identifier, action, parameters
       @identifier = identifier
       @action = action
       @parameters = parameters
     end
+
+    def visit visitor, arg=nil
+      return visitor.visitDescription(self, arg)
+    end
   end
 
+  class ActionExpression < (AbstractSyntaxTree::AST)
+  end
 
-  class Parameter < AST
+  class UnaryAction < ActionExpression
+    attr_accessor :action, :arg
+
+    def initialize action, arg
+      @action = action
+      @arg = arg
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitUnaryAction(self, arg)
+    end
+  end
+
+  class BinaryAction < ActionExpression
+    attr_accessor :action, :arg1, :arg2
+
+    def initialize action, arg1, arg2
+      @action = action
+      @arg1 = arg1
+      @arg2 = arg2
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitBinaryAction(self, arg)
+    end
+  end
+
+  class Parameter < (AbstractSyntaxTree::AST)
   end
 
   class SingleParameter < Parameter
@@ -74,6 +129,10 @@ module LogAST
 
     def initialize parameter_value
       @parameter_value = parameter_value
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitSingleParameter(self, arg)
     end
   end
 
@@ -84,48 +143,55 @@ module LogAST
       @parameter1 = parameter1
       @parameter2 = parameter2
     end
-  end
 
-
-
-  class Terminal < AST
-    attr_accessor :value
-
-    def initialize value
-      @value = value
+    def visit visitor, arg=nil
+      return visitor.visitSequentialParameter(self, arg)
     end
   end
 
 
-  class Identifier < Terminal
-    def initialize value
-      @value = super(value)
-    end
-  end
 
-
-  class ParameterValue < Terminal
+  class ParameterValue < (AbstractSyntaxTree::Terminal)
     def initialize value
       super(value)
     end
-  end
 
-  class Integer < Terminal
-    def initialize value
-      super(value)
+    def visit visitor, arg=nil
+      return visitor.visitParameterValue(self, arg)
     end
   end
 
-  class Unit < Terminal
+  class Integer < (AbstractSyntaxTree::Terminal)
     def initialize value
       super(value)
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitInteger(self, arg)
+    end
+  end
+
+  class Unit < (AbstractSyntaxTree::Terminal)
+    def initialize value
+      super(value)
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitUnit(self, arg)
     end
   end
 
 
-  class Action < Terminal
-      def initialize value
-        super(value)
-      end
+  class Action < (AbstractSyntaxTree::Terminal)
+    attr_accessor :declaration
+
+    def initialize value
+      super(value)
+      @declaration = nil
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visitAction(self, arg)
+    end
   end
 end

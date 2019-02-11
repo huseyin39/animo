@@ -1,7 +1,7 @@
 
 
-Program ::= [Line ';']+
-Line ::= Identifier '='  Type ',' '"' Filename '"'
+Program ::= [Declaration ';']+
+Declaration ::= Identifier '='  Type ',' '"' Filename '"'
 Type ::= dynamic | data | static
 Filename ::=  Identifier '.svg' (do we allow space) ?
 Identifier ::= Letter [Letter|[0-9]|_]*

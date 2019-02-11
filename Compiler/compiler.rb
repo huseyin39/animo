@@ -3,7 +3,7 @@ require_relative 'log/log_scanner'
 
 
 begin
-  path = File.join(File.dirname(__FILE__), 'test.log')
+  path = File.join(File.dirname(__FILE__), 'test_files\test.log')
   file = File.open(path, 'r')
   scanner = Scanner.new(file)
   parser = LogParser.new(scanner)

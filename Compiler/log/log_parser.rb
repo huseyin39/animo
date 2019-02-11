@@ -8,12 +8,15 @@ class LogParser
     @scanner = scanner
   end
 
-  def parse
+  def parse_log
     @currentToken = @scanner.scan
-    program_AST = parse_program
+    program_log_AST = parse_program_log
+    return program_log_AST
   end
 
   def accept (expectedToken)
+    puts currentToken.kind
+    puts currentToken.value
       if @currentToken.kind.eql? TOKEN_KINDS[expectedToken]
       @currentToken = @scanner.scan
     else
@@ -25,11 +28,11 @@ class LogParser
     @currentToken = @scanner.scan
   end
 
-  def parse_program
+  def parse_program_log
     accept(:BEGIN)
     body_AST = parse_body
     accept(:END)
-    return LogAST::Program.new(body_AST)
+    return LogAST::ProgramLog.new(body_AST)
   end
 
   def parse_body

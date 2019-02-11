@@ -60,9 +60,9 @@ class ObjectScanner
     end
 
     case @current_char
-    when ':'
+    when '='
       takeIt
-      return TOKEN_KINDS[:COLON]
+      return TOKEN_KINDS[:EQUAL]
 
     when ';'
       takeIt
@@ -72,14 +72,9 @@ class ObjectScanner
       takeIt
       return TOKEN_KINDS[:COMMA]
 
-    when ')'
+    when '"'
       takeIt
-      return TOKEN_KINDS[:RPARENTHESIS]
-
-    when '('
-      takeIt
-      return TOKEN_KINDS[:LPARENTHESIS]
-
+      return TOKEN_KINDS[:DOUBLEQUOTE]
     end
   end
 end
