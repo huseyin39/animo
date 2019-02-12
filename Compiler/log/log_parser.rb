@@ -17,7 +17,7 @@ class LogParser
   def accept (expectedToken)
     puts currentToken.kind
     puts currentToken.value
-      if @currentToken.kind.eql? TOKEN_KINDS[expectedToken]
+    if @currentToken.kind.eql? TOKEN_KINDS[expectedToken]
       @currentToken = @scanner.scan
     else
       raise 'Syntactic error'
@@ -68,23 +68,50 @@ class LogParser
 
   def parse_description
     identifier_AST = parse_identifier
-    action_AST = parse_action
-    accept(:LPARENTHESIS)
-    if @currentToken.kind.eql?TOKEN_KINDS[:INTEGER]
-      parameter_AST = parse_parameters
+    if @currentToken.value.eql?('move')
+      type = LogAST::Integer.new(nil)
     end
+    if @currentToken.kind.eql?(TOKEN_KINDS[:UNARYACTION])
+      description_AST = parse_unary_expression(type)
+    elsif @currentToken.kind.eql?(TOKEN_KINDS[:BINARYACTION])
+      description_AST = parse_binary_expression(type)
+    else
+      raise 'Syntactic error'
+    end
+    return LogAST::Description.new(identifier_AST, description_AST)
+  end
+
+  def parse_unary_expression type
+    unary_action_AST = parse_unary_action(type)
+    accept(:LPARENTHESIS)
+    parameter_value_AST = parse_parameter_value
     accept(:RPARENTHESIS)
-    return LogAST::Description.new(identifier_AST, action_AST, parameter_AST)
+    return LogAST::UnaryExpression.new(unary_action_AST, parameter_value_AST)
   end
 
-  def parse_action
-    action = @currentToken.value
-    accept(:ACTION)
-    return LogAST::Action.new(action)
-
+  def parse_binary_expression type
+    binary_action_AST = parse_binary_action(type)
+    accept(:LPARENTHESIS)
+    parameter_1_AST = parse_parameter_value
+    accept(:COMMA)
+    parameter_2_AST = parse_parameter_value
+    accept(:RPARENTHESIS)
+    return LogAST::BinaryExpression.new(binary_action_AST, parameter_1_AST, parameter_2_AST)
   end
 
-  def parse_parameters
+  def parse_unary_action type
+    unary_action = @currentToken.value
+    accept(:UNARYACTION)
+    return LogAST::UnaryAction.new(unary_action, type)
+  end
+
+  def parse_binary_action type
+    binary_action = @currentToken.value
+    accept(:BINARYACTION)
+    return LogAST::BinaryAction.new(binary_action, type)
+  end
+
+  def parse_parameters #unused
     parameter_value_AST = parse_parameter_value
     while @currentToken.kind.eql? TOKEN_KINDS[:COMMA]
       acceptIt
@@ -97,14 +124,20 @@ class LogParser
   def parse_parameter_value
     value = @currentToken.value
     #accept(:PARAMETERVALUE) to change in log_scanner as well to be able to determine ...
-    accept(:INTEGER)
-    return LogAST::ParameterValue.new(value)
+    case @currentToken.kind
+    when :INTEGER
+      return LogAST::Integer.new(value)
+
+    when :STRING
+      return LogAST::String.new(value)
+    end
+    raise 'Type Error'
   end
 
   def parse_identifier
     value = @currentToken.value
     accept(:IDENTIFIER)
-    return LogAST::Identifier.new(value)
+    return AbstractSyntaxTree::Identifier.new(value)
   end
 end
 

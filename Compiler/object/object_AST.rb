@@ -42,7 +42,7 @@ module ObjectAST
     end
 
     def visit visitor, arg=nil
-      return visitor.visitSingleDeclaration(self, arg)
+      return visitor.visit_single_declaration(self, arg)
     end
   end
 

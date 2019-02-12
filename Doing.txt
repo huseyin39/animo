@@ -1,7 +1,11 @@
 Doing:
-- Modèle : dont forget to write the require (e.g. fast_image)
+- Modï¿½le : dont forget to write the require (e.g. fast_image)
 - In write_lines : Detect x,y then calculate angle and direction
 
 
 ACTION <--> operator
 Integer <--> Integer-Literal
+
+
+parameter_value --> to remove and add string ?
+comment faire difference entre parameter_value et integer?

@@ -7,7 +7,7 @@ begin
   file = File.open(path, 'r')
   scanner = Scanner.new(file)
   parser = LogParser.new(scanner)
-  parser.parse
+  parser.parse_log
 rescue EOFError
   puts 'End of File'
 ensure

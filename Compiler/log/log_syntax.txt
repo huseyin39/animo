@@ -8,8 +8,9 @@ Production rules :
 Program ::= begin Body end
 Body ::= [Line ';']+
 Line ::= [Timestamp Description]
-Description ::= Identifier Action '('Parameter')'
-Parameter ::= Parameter_Value [','Parameter_Value]*
+Description ::= Identifier [BinaryExpression | UnaryExpression]
+UnaryExpression ::= UnaryAction '('Parameter_value')'
+BinaryExpression ::= BinaryAction '('Parameter_value, Parameter_value')'
 Timestamp ::= Integer Unit
 Unit ::= sec | msec
 
@@ -19,7 +20,8 @@ Unit ::= sec | msec
 Lexical grammar:
 
 Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | ) // | EOT ?
-Action ::= move |
+UnaryAction ::=
+BinaryAction ::= move |
 Parameter_Value ::=  Integer | E(empty)  //For the moment either Integer or nothing (to add such as transit..)
 Identifier ::= Letter [Letter|[0-9]|_]*
 Integer ::= [0-9]+

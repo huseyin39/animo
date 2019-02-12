@@ -29,7 +29,7 @@ module AbstractSyntaxTree
     end
 
     def visit visitor, arg=nil
-      return visitor.visitIdentifier(self, arg)
+      return visitor.visit_identifier(self, arg)
     end
   end
 end
