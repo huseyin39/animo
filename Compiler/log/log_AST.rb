@@ -12,7 +12,7 @@ module LogAST
     end
 
     def visit visitor, arg=nil
-      return visitor.visitProgramLog(self, arg)
+      return visitor.visit_program_log(self, arg)
     end
   end
 
@@ -109,8 +109,8 @@ module LogAST
   class BinaryExpression < Expression
     attr_accessor :binary_action, :arg1, :arg2
 
-    def initialize unary_action, arg1, arg2
-      @unary_action = unary_action
+    def initialize binary_action, arg1, arg2
+      @binary_action = binary_action
       @arg1 = arg1
       @arg2 = arg2
     end
@@ -121,45 +121,47 @@ module LogAST
 
   end
 
-  class Parameter < (AbstractSyntaxTree::AST) #unused
-  end
+  # class Parameter < (AbstractSyntaxTree::AST) #unused
+  # end
+  #
+  # class SingleParameter < Parameter
+  #   attr_accessor :parameter_value
+  #
+  #   def initialize parameter_value
+  #     @parameter_value = parameter_value
+  #   end
+  #
+  #   def visit visitor, arg=nil
+  #     return visitor.visit_single_parameter(self, arg)
+  #   end
+  # end
+  #
+  # class SequentialParameter < Parameter
+  #   attr_accessor :parameter1, :parameter2
+  #
+  #   def initialize parameter1, parameter2
+  #     @parameter1 = parameter1
+  #     @parameter2 = parameter2
+  #   end
+  #
+  #   def visit visitor, arg=nil
+  #     return visitor.visit_sequential_parameter(self, arg)
+  #   end
+  # end
 
-  class SingleParameter < Parameter
-    attr_accessor :parameter_value
+  class Parameter < (AbstractSyntaxTree::AST)
+    attr_accessor :parameter_ast
 
-    def initialize parameter_value
-      @parameter_value = parameter_value
+    def initialize parameter_ast
+      @parameter_ast = parameter_ast
     end
 
     def visit visitor, arg=nil
-      return visitor.visit_single_parameter(self, arg)
+      return visitor.visit_parameter(self, arg)
     end
   end
 
-  class SequentialParameter < Parameter
-    attr_accessor :parameter1, :parameter2
-
-    def initialize parameter1, parameter2
-      @parameter1 = parameter1
-      @parameter2 = parameter2
-    end
-
-    def visit visitor, arg=nil
-      return visitor.visit_sequential_parameter(self, arg)
-    end
-  end
-
-  class ParameterValue < (AbstractSyntaxTree::Terminal)
-    def initialize value
-      super(value)
-    end
-
-    def visit visitor, arg=nil
-      return visitor.visit_parameter_value(self, arg)
-    end
-  end
-
-  class Integer < (AbstractSyntaxTree::Terminal)
+  class IntegerLiteral < (AbstractSyntaxTree::Terminal)
     def initialize value
       super(value)
     end
@@ -169,7 +171,7 @@ module LogAST
     end
 
     def == object
-      if (object.nil? && object.instance_of?(Integer))
+      if (!object.nil? && object.instance_of?(IntegerLiteral))
         return true
       else
         return false

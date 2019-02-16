@@ -1,3 +1,5 @@
+require_relative 'object_token'
+
 class ObjectScanner
   def initialize file
     @file = file
@@ -11,7 +13,7 @@ class ObjectScanner
   def take(expected_character)
     if @current_char.eql?(expected_character)
       @current_value << @current_char
-      @current_char = file.readchar # method to get next char
+      fetch_next_char
     else
       raise 'Lexical Error'
     end
@@ -19,7 +21,15 @@ class ObjectScanner
 
   def takeIt
     @current_value << @current_char
-    @current_char = @file.readchar # method to get next char
+    fetch_next_char
+  end
+
+  def fetch_next_char
+    if (@file.eof)
+      @current_char = '$'
+    else
+      @current_char = @file.readchar # method to get next char
+    end
   end
 
   def is_letter?(character)
@@ -37,44 +47,58 @@ class ObjectScanner
     end
     @current_value = StringIO.new
     @current_kind = scan_token
-    puts "Kind : #{@current_kind} value : #{@current_value.string}"
-    return Token.new(@current_kind, @current_value.string)
+    puts "Object : Kind : #{@current_kind} value : #{@current_value.string}"
+    return ObjectToken.new(@current_kind, @current_value.string)
   end
 
 
   def scan_token
-    if is_numeric?(@current_char) #Integer
-      takeIt
-      while is_numeric?(@current_char)
-        takeIt
-      end
-      return TOKEN_KINDS[:INTEGER]
-    end
+    # if is_numeric?(@current_char) #Integer
+    #   takeIt
+    #   while is_numeric?(@current_char)
+    #     takeIt
+    #   end
+    #   return OBJECT_TOKEN_KINDS[:INTEGER]
+    # end
 
     if is_letter?(@current_char)
       takeIt
       while is_letter?(@current_char) || is_numeric?(@current_char) || @current_char === '_'
         takeIt
       end
-      return TOKEN_KINDS[:IDENTIFIER]
+      if (@current_char.eql?('.'))
+        takeIt
+        take('s')
+        take('v')
+        take('g')
+        return OBJECT_TOKEN_KINDS[:FILENAME]
+      end
+      return OBJECT_TOKEN_KINDS[:IDENTIFIER]
     end
 
     case @current_char
     when '='
       takeIt
-      return TOKEN_KINDS[:EQUAL]
+      return OBJECT_TOKEN_KINDS[:EQUAL]
 
     when ';'
       takeIt
-      return TOKEN_KINDS[:SEMICOLON]
+      return OBJECT_TOKEN_KINDS[:SEMICOLON]
 
     when ','
       takeIt
-      return TOKEN_KINDS[:COMMA]
+      return OBJECT_TOKEN_KINDS[:COMMA]
 
     when '"'
       takeIt
-      return TOKEN_KINDS[:DOUBLEQUOTE]
+      return OBJECT_TOKEN_KINDS[:DOUBLEQUOTE]
+
     end
+
+    if @current_char.eql?('$')
+      return OBJECT_TOKEN_KINDS[:EOF]
+    end
+
+    raise 'Unexpected character'
   end
 end

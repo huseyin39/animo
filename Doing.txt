@@ -6,6 +6,11 @@ Doing:
 ACTION <--> operator
 Integer <--> Integer-Literal
 
+tester le checker (contextual analysis)
+remplacer parameter-value par des mots-clés : on, off ...
+checker que le fichier SVG est présent
 
-parameter_value --> to remove and add string ?
-comment faire difference entre parameter_value et integer?
+done : handled case EOF occurs before end of Line or declaration
+type checking
+mettre en place le fait de checker que le timestamp est bien croissant
+checker symbol table

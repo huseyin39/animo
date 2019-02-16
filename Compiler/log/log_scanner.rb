@@ -1,6 +1,6 @@
 require_relative 'log_token'
 
-class Scanner
+class LogScanner
 
   def initialize file
     @file = file
@@ -14,7 +14,7 @@ class Scanner
   def take(expected_character)
     if @current_char.eql?(expected_character)
       @current_value << @current_char
-      @current_char = file.readchar # method to get next char
+      fetch_next_char
     else
       raise 'Lexical Error'
     end
@@ -22,7 +22,15 @@ class Scanner
 
   def takeIt
     @current_value << @current_char
-    @current_char = @file.readchar # method to get next char
+    fetch_next_char
+  end
+
+  def fetch_next_char
+    if (@file.eof)
+      @current_char = '$'
+    else
+      @current_char = @file.readchar # method to get next char
+    end
   end
 
   def is_letter?(character)
@@ -39,8 +47,7 @@ class Scanner
     end
     @current_value = StringIO.new
     @current_kind = scan_token
-    puts "Kind : #{@current_kind} value : #{@current_value.string}"
-    return Token.new(@current_kind, @current_value.string)
+    return LogToken.new(@current_kind, @current_value.string)
   end
 
   def scan_separator #is it used?
@@ -56,7 +63,7 @@ class Scanner
       while is_numeric?(@current_char)
         takeIt
       end
-      return TOKEN_KINDS[:INTEGER]
+      return LOG_TOKEN_KINDS[:INTEGER]
     end
 
 
@@ -65,7 +72,7 @@ class Scanner
       while is_letter?(@current_char) || is_numeric?(@current_char) || @current_char === '_'
         takeIt
       end
-      return TOKEN_KINDS[:IDENTIFIER]
+      return LOG_TOKEN_KINDS[:IDENTIFIER]
     end
 
 
@@ -73,24 +80,33 @@ class Scanner
 
     when ':'
     takeIt
-    return TOKEN_KINDS[:COLON]
+    return LOG_TOKEN_KINDS[:COLON]
 
     when ';'
     takeIt
-    return TOKEN_KINDS[:SEMICOLON]
+    return LOG_TOKEN_KINDS[:SEMICOLON]
 
     when ','
     takeIt
-    return TOKEN_KINDS[:COMMA]
+    return LOG_TOKEN_KINDS[:COMMA]
 
     when ')'
     takeIt
-    return TOKEN_KINDS[:RPARENTHESIS]
+    return LOG_TOKEN_KINDS[:RPARENTHESIS]
 
     when '('
     takeIt
-    return TOKEN_KINDS[:LPARENTHESIS]
+    return LOG_TOKEN_KINDS[:LPARENTHESIS]
+
     end
+
+
+    if @current_char.eql?('$')
+      return LOG_TOKEN_KINDS[:EOF]
+    end
+
+    raise 'Unexpected character'
+
   end
 end
 

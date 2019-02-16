@@ -5,9 +5,13 @@ module AbstractSyntaxTree
   class Program < AST
     attr_accessor :program_log, :program_object
 
-    def initialize program_log, program_object
-      @program_log = program_log
+    def initialize program_object, program_log
       @program_object = program_object
+      @program_log = program_log
+    end
+
+    def visit visitor, arg=nil
+      return visitor.visit_program(self, arg)
     end
   end
 

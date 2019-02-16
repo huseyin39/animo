@@ -1,1 +1,2 @@
-identifier = type, "chemin";
+robot_1 = dynamic, "relatif_chemin.svg";
+azes = static, "razs.svg";

@@ -4,18 +4,6 @@ require_relative '../AST'
 
 module ObjectAST
 
-  class Program < (AbstractSyntaxTree::AST)
-    attr_accessor :declaration
-
-    def initialize declaration
-      @declaration = declaration
-    end
-
-    def visit visitor, arg=nil
-      return visitor.visitProgram(self, arg)
-    end
-  end
-
   class ProgramObject < (AbstractSyntaxTree::AST)
     attr_accessor :declarations
 
@@ -24,7 +12,7 @@ module ObjectAST
     end
 
     def visit visitor, arg=nil
-      return visitor.visitProgramObject(self, arg)
+      return visitor.visit_program_object(self, arg)
     end
   end
 
@@ -55,7 +43,7 @@ module ObjectAST
     end
 
     def visit visitor, arg=nil
-      return visitor.visitSequentialDeclaration(self, arg)
+      return visitor.visit_sequential_declaration(self, arg)
     end
   end
 
@@ -66,7 +54,7 @@ module ObjectAST
     end
 
     def visit visitor, arg=nil
-      return visitor.visitFilename(self, arg)
+      return visitor.visit_filename(self, arg)
     end
   end
 
@@ -76,7 +64,7 @@ module ObjectAST
     end
 
     def visit visitor, arg=nil
-      return visitor.visitType(self, arg)
+      return visitor.visit_type(self, arg)
     end
   end
 end
