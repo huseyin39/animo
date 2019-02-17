@@ -3,14 +3,13 @@ Doing:
 - In write_lines : Detect x,y then calculate angle and direction
 
 
-ACTION <--> operator
-Integer <--> Integer-Literal
 
-tester le checker (contextual analysis)
+
 remplacer parameter-value par des mots-clés : on, off ...
-checker que le fichier SVG est présent
 
 done : handled case EOF occurs before end of Line or declaration
 type checking
 mettre en place le fait de checker que le timestamp est bien croissant
 checker symbol table
+checker que le fichier SVG est présent
+checker que les actions dans les fichiers .log correspondent bien au action défini dans les .object

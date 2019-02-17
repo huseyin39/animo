@@ -6,7 +6,7 @@ require_relative 'checker'
 
 def parse_object path
   begin
-    object_path = File.join(File.dirname(__FILE__ ), 'test_files\\' + path)
+    object_path = File.join(File.dirname(__FILE__ ), 'test_files/' + path)
     object_file = File.open(object_path, 'r')
     object_scanner = ObjectScanner.new(object_file)
     object_parser = ObjectParser.new(object_scanner)
@@ -22,7 +22,7 @@ end
 
 def parse_log path
   begin
-    log_path = File.join(File.dirname(__FILE__), 'test_files\\' + path)
+    log_path = File.join(File.dirname(__FILE__), 'test_files/' + path)
     log_file = File.open(log_path, 'r')
     log_scanner = LogScanner.new(log_file)
     log_parser = LogParser.new(log_scanner)

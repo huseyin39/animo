@@ -5,7 +5,7 @@ class Move
   OUTPUT_JS_FILE = 'output.js'.freeze
 
   # Constructor
-  # number_lines = number of lines dedicated to the animation // to be done by Main
+  # number_lines = number of lines dedicated to the code_generator // to be done by Main
   # x, y = initial position
   def initialize(number_lines, path_to_SVG_FILE, window_width: 1000, window_height: 600, x: 0, y: 0)
     @number_lines = number_lines

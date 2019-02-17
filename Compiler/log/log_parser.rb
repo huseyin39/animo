@@ -109,15 +109,15 @@ class LogParser
   end
 
   def parse_unary_action type
-    unary_action = @currentToken.value
+    unary_action_kind = @currentToken.value.rstrip
     accept(:UNARYACTION)
-    return LogAST::UnaryAction.new(unary_action, type)
+    return LogAST::UnaryAction.new(unary_action_kind, type)
   end
 
   def parse_binary_action type
-    binary_action = @currentToken.value
+    binary_action_kind = @currentToken.value.rstrip
     accept(:BINARYACTION)
-    return LogAST::BinaryAction.new(binary_action, type)
+    return LogAST::BinaryAction.new(binary_action_kind, type)
   end
 
   def parse_parameters #unused

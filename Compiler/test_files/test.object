@@ -1,2 +1,2 @@
-robot_1 = dynamic, "relatif_chemin.svg";
-azes = static, "razs.svg";
+robot_1 = move, "dessin.svg";
+rdse_1 = data, "dessin.svg";
