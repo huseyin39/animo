@@ -19,10 +19,10 @@ Unit ::= sec | msec
 
 Lexical grammar:
 
-Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | ) // | EOT ?
+Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | ) | - // | EOT ?
 UnaryAction ::=
 BinaryAction ::= move |
-Parameter_Value ::=  Integer | E(empty)  //For the moment either Integer or nothing (to add such as transit..)
+Parameter_Value ::=  -Integer | Integer | E(empty)  //For the moment either Integer or nothing (to add such as transit..)
 Identifier ::= Letter [Letter|[0-9]|_]*
 Integer ::= [0-9]+
 Separator ::= Space | EndOFLine

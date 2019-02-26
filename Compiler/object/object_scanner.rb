@@ -47,7 +47,7 @@ class ObjectScanner
     end
     @current_value = StringIO.new
     @current_kind = scan_token
-    puts "Object : Kind : #{@current_kind} value : #{@current_value.string}"
+    #puts "Object : Kind : #{@current_kind} value : #{@current_value.string}"
     return ObjectToken.new(@current_kind, @current_value.string)
   end
 

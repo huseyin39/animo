@@ -1,8 +1,7 @@
 begin
-3 sec : robot_1 move (6, 5);
-4 sec : robot_1 move (4, 5);
-4 sec : robot_1 move (4, 5);
-4 sec : robot_1 move (4, 5);
-4 sec : robot_1 move (4, 5);
-10 sec : rdse_1 move (7,6);
+1 sec : robot_1 move (5, 5);
+3 sec : robot_1 move (-4, -4);
+4 sec : robot_1 move (300, 100);
+6 sec : robot_1 move (100, 340);
+10 sec : robot_1 move (4, 5);
 end

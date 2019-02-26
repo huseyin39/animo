@@ -16,7 +16,7 @@ class LogToken
         end
       end
     end
-    puts "Log -- Kind : #{@kind} value : #{@value}"
+    #puts "Log -- Kind : #{@kind} value : #{@value}"
   end
 
   #To check the kind of the currentToken

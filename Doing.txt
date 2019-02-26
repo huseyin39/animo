@@ -4,6 +4,10 @@ Doing:
 
 
 
+doing :
+- code generator pour svg : mettre en place le calcul des prochains points et angles: (angles incorrects)
+- calcul du dernier angle
+
 
 remplacer parameter-value par des mots-clés : on, off ...
 

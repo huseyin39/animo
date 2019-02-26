@@ -2,16 +2,17 @@ require_relative 'symbol_table'
 require_relative 'log/log_AST'
 
 class Checker
-  attr_accessor :symbol_table, :current_time
+  attr_accessor :symbol_table, :current_time, :types
 
   def initialize
     @symbol_table = SymbolTable.new
     @current_time = nil
+    @types = Hash.new
   end
 
   def check ast
     ast.visit(self, nil)
-    return nil
+    return types
   end
 
   def visit_program program, arg
@@ -130,6 +131,7 @@ class Checker
     type_value = type.value
     case type_value
     when 'move', 'data'
+      @types[type_value] = 0
       return type_value
     end
     raise "#{type_value} is not recognized"

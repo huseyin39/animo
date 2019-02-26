@@ -3,6 +3,7 @@ require_relative 'log/log_scanner'
 require_relative 'object/object_parser'
 require_relative 'object/object_scanner'
 require_relative 'checker'
+require_relative 'code_generator/svg_code_generator'
 
 def parse_object path
   begin
@@ -40,4 +41,6 @@ end
 ast_object = parse_object('test.object')
 ast_log = parse_log('test.log')
 ast = AbstractSyntaxTree::Program.new(ast_object, ast_log)
-Checker.new.check(ast)
+checker = Checker.new()
+types = checker.check(ast)
+SvgCodeGenerator.new(types).generate(ast)

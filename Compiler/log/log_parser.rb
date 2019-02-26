@@ -19,8 +19,6 @@ class LogParser
   end
 
   def accept (expectedToken)
-    puts @currentToken.kind
-    puts @currentToken.value
     if @currentToken.kind.eql? LOG_TOKEN_KINDS[expectedToken]
       @currentToken = @scanner.scan
     else

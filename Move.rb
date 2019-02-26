@@ -21,7 +21,9 @@ class Move
 
 
   def resize_svg
+    puts @path_svg
     size = FastImage.size(@path_svg)
+    puts size
     rate_width = @window_width.to_f / (20 * size[0])
     rate_height = @window_height.to_f / (20 * size[1])
 
@@ -76,7 +78,7 @@ class Move
 
 end
 
-path = "dessin.svg"
+path = "compiler/test_files/dessin.svg"
 
 a = Move.new(10, path, window_width: 1000, window_height: 600, x: 500, y: 300)
 a.resize_svg

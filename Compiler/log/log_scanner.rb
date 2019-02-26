@@ -59,11 +59,7 @@ class LogScanner
 
   def scan_token
     if is_numeric?(@current_char) #Integer
-      takeIt
-      while is_numeric?(@current_char)
-        takeIt
-      end
-      return LOG_TOKEN_KINDS[:INTEGER]
+      return scan_numeric
     end
 
 
@@ -79,25 +75,27 @@ class LogScanner
     case @current_char
 
     when ':'
-    takeIt
-    return LOG_TOKEN_KINDS[:COLON]
+      takeIt
+      return LOG_TOKEN_KINDS[:COLON]
 
     when ';'
-    takeIt
-    return LOG_TOKEN_KINDS[:SEMICOLON]
+      takeIt
+      return LOG_TOKEN_KINDS[:SEMICOLON]
 
     when ','
-    takeIt
-    return LOG_TOKEN_KINDS[:COMMA]
+      takeIt
+      return LOG_TOKEN_KINDS[:COMMA]
 
     when ')'
-    takeIt
-    return LOG_TOKEN_KINDS[:RPARENTHESIS]
+      takeIt
+      return LOG_TOKEN_KINDS[:RPARENTHESIS]
 
     when '('
-    takeIt
-    return LOG_TOKEN_KINDS[:LPARENTHESIS]
+      takeIt
+      return LOG_TOKEN_KINDS[:LPARENTHESIS]
 
+    when '-'
+      return scan_numeric
     end
 
 
@@ -106,7 +104,14 @@ class LogScanner
     end
 
     raise 'Unexpected character'
+  end
 
+  def scan_numeric
+    takeIt
+    while is_numeric?(@current_char)
+      takeIt
+    end
+    return LOG_TOKEN_KINDS[:INTEGER]
   end
 end
 
