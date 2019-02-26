@@ -4,7 +4,7 @@ require_relative 'animation_instructions'
 
 class SvgCodeGenerator
   def initialize types
-    @types = types
+    @types = types #need or not ?
     @file = nil
     @window_width = 1000
     @window_height = 600
@@ -18,6 +18,7 @@ class SvgCodeGenerator
       if (!@types['move'].nil?)
         @file.write("import {Move} from \'./move.js\';\n\n")
       end
+      @file.write("var draw = SVG('drawing').size(#{@window_width}, #{@window_height});\n\n")
       ast.visit(self, nil)
       @information.each do |id, info|
         if (info[0].eql?('move'))

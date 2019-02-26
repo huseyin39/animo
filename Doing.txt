@@ -5,8 +5,10 @@ Doing:
 
 
 doing :
+- mise en place de l'adjustement en fonction du X, Y le plus grand des données.
 - code generator pour svg : mettre en place le calcul des prochains points et angles: (angles incorrects)
 - calcul du dernier angle
+- besoin du @types ??
 
 
 remplacer parameter-value par des mots-clés : on, off ...

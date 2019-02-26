@@ -62,7 +62,7 @@ class LogParser
   end
 
   def parse_unit
-    unit = @currentToken.value
+    unit = @currentToken.value.rstrip
     accept(:SEC) #Pour le moment
     return LogAST::Unit.new(unit)
   end

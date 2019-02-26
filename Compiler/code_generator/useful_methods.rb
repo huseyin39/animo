@@ -39,6 +39,7 @@ require_relative 'svg_code_generator'
   def compute_angle_bis *coordinates
     x0, y0, x, y = coordinates
     x, y = x-x0, y-y0
+
     angle = Math.atan(y/x)
     angle = angle*180/Math::PI
     if angle > 0
@@ -49,9 +50,9 @@ require_relative 'svg_code_generator'
       end
     elsif angle < 0
       if x < 0 #that means y>0
-        return 360+angle
-      else
         return 180+angle
+      else
+        return 360+angle
       end
     else
       return angle

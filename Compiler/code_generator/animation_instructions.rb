@@ -24,7 +24,7 @@ module AnimationInstructions
 
     def write file
       width, height = resize_svg(@path)
-      string = "var #{identifier} = new Move('#{@path}', #{@window_width}, #{@window_height}, #{width}, #{height});\n"
+      string = "var #{identifier} = new Move(draw,'#{@path}', #{@window_width}, #{@window_height}, #{width}, #{height});\n"
       file.write(string)
     end
   end
@@ -61,7 +61,7 @@ module AnimationInstructions
     end
 
     def write_first_line file
-      string = "\n#{@identifier}.rotate(#{@parameters[0][0]});\n"
+      string = "#{@identifier}.rotate(#{@parameters[0][0]});\n"
       file.write(string)
     end
   end
