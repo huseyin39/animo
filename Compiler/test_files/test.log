@@ -1,11 +1,11 @@
 begin
 1 sec : robot_1 move (50, 50);
-1 sec : robot_2 move (1, 1);
+1 sec : robot_2 move (0, 0);
 3 sec : robot_1 move (-40, -40);
-3 sec : robot_2 move (100, 340);
+3 sec : robot_2 move (100, 240);
 4 sec : robot_1 move (300, 100);
 4 sec : robot_2 move (300, 100);
-6 sec : robot_1 move (100, 340);
+6 sec : robot_1 move (100, 240);
 6 sec : robot_2 move (-40, -40);
 10 sec : robot_1 move (0, 0);
 10 sec : robot_2 move (50, 50);

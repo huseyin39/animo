@@ -143,7 +143,7 @@ class LogParser
   end
 
   def parse_identifier
-    value = @currentToken.value
+    value = @currentToken.value.rstrip
     accept(:IDENTIFIER)
     return AbstractSyntaxTree::Identifier.new(value)
   end

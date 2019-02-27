@@ -40,16 +40,26 @@ require_relative 'svg_code_generator'
     x0, y0, x, y = coordinates
     x, y = x-x0, y-y0
 
+    if (x == 0)
+      if (y < 0 )
+        return -90
+      elsif (y > 0)
+        return 90
+      else
+        return nil
+      end
+    end
+
     angle = Math.atan(y/x)
     angle = angle*180/Math::PI
-    if angle > 0
-      if x < 0 #that means y<0 too
+    if (angle > 0)
+      if (x < 0) #that means y<0 too
         return 180+angle
       else
         return angle
       end
-    elsif angle < 0
-      if x < 0 #that means y>0
+    elsif (angle < 0)
+      if (x < 0) #that means y>0
         return 180+angle
       else
         return 360+angle

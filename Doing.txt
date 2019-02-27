@@ -5,10 +5,9 @@ Doing:
 
 
 doing :
-- mise en place de l'adjustement en fonction du X, Y le plus grand des données.
-- code generator pour svg : mettre en place le calcul des prochains points et angles: (angles incorrects)
-- calcul du dernier angle
+- mise en place de l'ajustement en fonction du X, Y le plus grand des données.
 - besoin du @types ??
+- afficher échelle
 
 
 remplacer parameter-value par des mots-clés : on, off ...
@@ -19,3 +18,7 @@ mettre en place le fait de checker que le timestamp est bien croissant
 checker symbol table
 checker que le fichier SVG est présent
 checker que les actions dans les fichiers .log correspondent bien au action défini dans les .object
+calcul du dernier angle
+code generator pour svg : mettre en place le calcul des prochains points et angles: (angles incorrects)
+régler le problème des chemins
+calcul des angles attention (division par 0)

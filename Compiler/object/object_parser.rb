@@ -53,19 +53,19 @@ class ObjectParser
   end
 
   def parse_type
-    value = @currentToken.value
+    value = @currentToken.value.rstrip
     accept(:TYPE)
     return ObjectAST::Type.new(value)
   end
 
   def parse_filename
-    value = @currentToken.value
+    value = @currentToken.value.rstrip
     accept(:FILENAME)
     return ObjectAST::Filename.new(value)
   end
 
   def parse_identifier
-    value = @currentToken.value
+    value = @currentToken.value.rstrip
     accept(:IDENTIFIER)
     return AbstractSyntaxTree::Identifier.new(value)
   end

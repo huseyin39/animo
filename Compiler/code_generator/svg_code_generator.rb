@@ -3,21 +3,22 @@ require_relative 'useful_methods'
 require_relative 'animation_instructions'
 
 class SvgCodeGenerator
-  def initialize types
+  def initialize types, filename
     @types = types #need or not ?
+    @filename = filename
     @file = nil
     @window_width = 1000
     @window_height = 600
-    @information = Hash.new #[type, duration, coord, current_time] duration = [t-1, t]; coord = [x-1, y-1, x, y]
+    @information = Hash.new #[type, duration, coord, current_time, angle] duration = [t-1, t]; coord = [x-1, y-1, x, y]
   end
 
   def generate ast
     begin
-      path = File.join(File.dirname(__FILE__ ), "../res/animation.js")
+      path = File.join(File.dirname(__FILE__ ), "../res/" + @filename + ".js")
       @file = File.new(path, 'w+')
-      if (!@types['move'].nil?)
-        @file.write("import {Move} from \'./move.js\';\n\n")
-      end
+      # if (!@types['move'].nil?)
+      #   @file.write("import {Move} from \'./move.js\';\n\n")
+      # end
       @file.write("var draw = SVG('drawing').size(#{@window_width}, #{@window_height});\n\n")
       ast.visit(self, nil)
       @information.each do |id, info|
@@ -26,6 +27,7 @@ class SvgCodeGenerator
           AnimationInstructions::MoveInstruction.new(@file, info[1][1], id, false, distance,0)
         end
       end
+      AnimationInstructions::HTMLFileMove.new(@filename)
     ensure
       @file.close unless @file.nil?
     end
@@ -107,10 +109,16 @@ class SvgCodeGenerator
       x, y, x1, y1 = @information[id][2].map{ |coord| if (!coord.nil?) then coord.to_f end}
       if (x.nil?)
         angle = compute_angle_bis(x1, y1, arg1.to_f, arg2.to_f)
-        AnimationInstructions::MoveInstruction.new(@file, @information[id][1][0], id, true, angle)
+        if (!angle.nil?)
+          @information[id][4] = angle
+        end
+        AnimationInstructions::MoveInstruction.new(@file, @information[id][1][0], id, true, @information[id][4])
       else
         distance, angle = compute_next_parameters(x, y, x1, y1, arg1.to_f, arg2.to_f)
-        AnimationInstructions::MoveInstruction.new(@file, @information[id][1][0], id, false, distance, angle)
+        if (!angle.nil?)
+          @information[id][4] = angle
+        end
+        AnimationInstructions::MoveInstruction.new(@file, @information[id][1][0], id, nil, distance, @information[id][4])
       end
       coord = [x1, y1, arg1.to_f, arg2.to_f]
       @information[id][2] = coord
@@ -145,12 +153,11 @@ class SvgCodeGenerator
     type = single_declaration.type.visit(self, nil)
     id = single_declaration.identifier.visit(self, nil)
     path = single_declaration.filename.visit(self, nil)
-    path = object_path = File.join(File.dirname(__FILE__), '../test_files/' + path)
     case type
     when 'move'
       AnimationInstructions::MoveInitialization.new(@file, id, path, @window_width, @window_height)
       coord = [nil, nil, 0, 0]
-      @information[id] = ['move', [nil, nil], coord, 0]
+      @information[id] = ['move', [nil, nil], coord, 0, 0]
     end
   end
 

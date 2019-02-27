@@ -138,7 +138,7 @@ class Checker
   end
 
   def visit_filename filename, arg
-    file = File.join(File.dirname(__FILE__), 'test_files/' + filename.value)
+    file = File.join(File.dirname(__FILE__), 'svg_files/' + filename.value)
     if (!File.file?(file))
       raise "#{file} does not exist"
     end
