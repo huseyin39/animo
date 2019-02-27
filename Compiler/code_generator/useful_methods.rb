@@ -18,9 +18,7 @@ require_relative 'svg_code_generator'
     x,y,x1,y1,x2,y2 = coordinates
 
     length_0 = compute_distance([x,y,x1,y1]) # ||P0P1||
-    #length_1 = compute_distance([x2,y2,x1,y1]) # ||P2P1||
-    #length_2 = compute_distance([x,y,x2,y2]) # ||P2P0||
-    angle = compute_angle_bis(x1, y1, x2, y2)
+    angle = compute_angle(x1, y1, x2, y2)
     return length_0, angle
   end
 
@@ -30,13 +28,7 @@ require_relative 'svg_code_generator'
     return distance
   end
 
-  def compute_angle length_0, length_1, length_2
-    temp_res = length_0**2 + length_2**2 - length_1**2
-    temp_res = temp_res / ( 2*length_0*length_2)
-    return Math.acos(temp_res)*180/Math::PI
-  end
-
-  def compute_angle_bis *coordinates
+  def compute_angle *coordinates
     x0, y0, x, y = coordinates
     x, y = x-x0, y-y0
 

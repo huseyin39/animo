@@ -1,4 +1,4 @@
-Doing:
+﻿Doing:
 - Mod�le : dont forget to write the require (e.g. fast_image)
 - In write_lines : Detect x,y then calculate angle and direction
 
@@ -8,6 +8,7 @@ doing :
 - mise en place de l'ajustement en fonction du X, Y le plus grand des données.
 - besoin du @types ??
 - afficher échelle
+- data : chartjs
 
 
 remplacer parameter-value par des mots-clés : on, off ...

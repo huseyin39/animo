@@ -108,7 +108,7 @@ class SvgCodeGenerator
     when 'move'
       x, y, x1, y1 = @information[id][2].map{ |coord| if (!coord.nil?) then coord.to_f end}
       if (x.nil?)
-        angle = compute_angle_bis(x1, y1, arg1.to_f, arg2.to_f)
+        angle = compute_angle(x1, y1, arg1.to_f, arg2.to_f)
         if (!angle.nil?)
           @information[id][4] = angle
         end
