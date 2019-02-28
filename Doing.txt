@@ -5,6 +5,9 @@
 
 
 doing :
+- pour move: faire avec setTimeout ?
+- window size => via javascript
+- 1 fichier -> 1 type de log ?
 - mise en place de l'ajustement en fonction du X, Y le plus grand des données.
 - besoin du @types ??
 - afficher échelle

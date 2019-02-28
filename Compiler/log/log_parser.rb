@@ -77,6 +77,8 @@ class LogParser
     identifier_AST = parse_identifier
     if @currentToken.value.eql?('move')
       type = LogAST::IntegerLiteral.new(nil)
+    elsif @currentToken.value.eql?('data')
+      type = LogAST::IntegerLiteral.new(nil)
     end
     if @currentToken.kind.eql?(LOG_TOKEN_KINDS[:UNARYACTION])
       description_AST = parse_unary_expression(type)

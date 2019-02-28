@@ -123,14 +123,16 @@ class Checker
 
   def visit_single_declaration single_declaration, arg
     single_declaration.type.visit(self, nil)
-    single_declaration.filename.visit(self, nil)
+    if (!single_declaration.filename.nil?)
+      single_declaration.filename.visit(self, nil)
+    end
     @symbol_table.insert(single_declaration.identifier.value, single_declaration)
   end
 
   def visit_type type, arg
     type_value = type.value
     case type_value
-    when 'move', 'data'
+    when 'move', 'chart'
       @types[type_value] = 0
       return type_value
     end

@@ -152,12 +152,16 @@ class SvgCodeGenerator
   def visit_single_declaration single_declaration, arg
     type = single_declaration.type.visit(self, nil)
     id = single_declaration.identifier.visit(self, nil)
-    path = single_declaration.filename.visit(self, nil)
+    if (!single_declaration.filename.nil?)
+      path = single_declaration.filename.visit(self, nil)
+    end
     case type
     when 'move'
       AnimationInstructions::MoveInitialization.new(@file, id, path, @window_width, @window_height)
       coord = [nil, nil, 0, 0]
       @information[id] = ['move', [nil, nil], coord, 0, 0]
+    when 'chart'
+      puts 'a'
     end
   end
 

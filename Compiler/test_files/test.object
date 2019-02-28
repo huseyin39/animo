@@ -1,2 +1,5 @@
 robot_1 = move, "dessin.svg";
 robot_2 = move, "dessin.svg";
+
+
+data1 = chart;

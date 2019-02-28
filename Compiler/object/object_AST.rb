@@ -23,7 +23,7 @@ module ObjectAST
   class SingleDeclaration < Declaration
     attr_accessor :identifier, :type, :filename
 
-    def initialize identifier, type, filename
+    def initialize identifier, type, filename=nil
       @identifier = identifier
       @type = type
       @filename = filename

@@ -5,8 +5,10 @@ class LogToken
     @kind = kind
     @value = value
     if (@kind == LOG_TOKEN_KINDS[:IDENTIFIER])
-      if @value.eql?('move') #add here the rest
+      if @value.eql?('move')#add here the rest
         @kind = 2
+      elsif @value.eql?('data')
+        @kind = 1
       else
         (LOG_TOKEN_KINDS[:BEGIN]..LOG_TOKEN_KINDS[:SEC]).each do |i|
           if @value.eql?(VALUE[i])

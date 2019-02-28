@@ -32,6 +32,24 @@ module AnimationInstructions
     end
   end
 
+  class HTMLFileChart < HTMLFileInitialization
+    def initialize  filename, window_width = 1000, window_height = 600
+      super(filename, window_width, window_height)
+      write
+    end
+
+    def write
+      begin
+        path = File.join(File.dirname(__FILE__ ), "../res/"+@filename+".html")
+        file = File.new(path, 'w+')
+        string = "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <script src=\"Chart.js\"></script>\n</head>\n<body>\n  <div class=\"chart-container\" style=\"position: absolute; width:#{@window_width}px; height:#{@window_height}px\">\n    <canvas id=\"chart\"></canvas>\n  </div>\n</body>"
+        file.write(string)
+      ensure
+        file.close unless file.nil?
+      end
+    end
+  end
+
   class ObjectInitialization
     attr_accessor :identifier, :filename, :window_width, :window_height
 
@@ -60,6 +78,14 @@ module AnimationInstructions
       string = "var #{identifier} = draw.image('../svg_files/#{@filename}').size(#{width}, #{height}).cx(#{@window_width/2}).cy(#{@window_height/2});\n"
       file.write(string)
     end
+  end
+
+  class ChartInitialization < ObjectInitialization
+    def initialize file, identifier, filename, window_width = 1000, window_height = 600
+      super(identifier, filename, window_width, window_height)
+      write(file)
+    end
+    #here
   end
 
   class Instruction

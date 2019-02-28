@@ -31,5 +31,5 @@ Separator ::= Space | EndOFLine
 
 example:
 
-2 s : robot_test moved (2,3);
+2 s : robot_test move (2,3);
 Pour le moment on peut avoir () : c'est à dire pas de paramètres

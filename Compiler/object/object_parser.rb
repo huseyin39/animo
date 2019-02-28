@@ -45,11 +45,15 @@ class ObjectParser
     identifier_AST = parse_identifier
     accept(:EQUAL)
     type_AST = parse_type
-    accept(:COMMA)
-    accept(:DOUBLEQUOTE)
-    filename_AST = parse_filename
-    accept(:DOUBLEQUOTE)
-    return ObjectAST::SingleDeclaration.new(identifier_AST, type_AST, filename_AST)
+    if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:COMMA])
+      acceptIt
+      accept(:DOUBLEQUOTE)
+      filename_AST = parse_filename
+      accept(:DOUBLEQUOTE)
+      return ObjectAST::SingleDeclaration.new(identifier_AST, type_AST, filename_AST)
+    end
+    return ObjectAST::SingleDeclaration.new(identifier_AST, type_AST)
+
   end
 
   def parse_type

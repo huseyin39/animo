@@ -5,9 +5,8 @@ class ObjectToken
     @kind = kind
     @value = value
     if (@kind == OBJECT_TOKEN_KINDS[:IDENTIFIER])
-      if @value.eql?('move') || @value.eql?('data')#add here the rest || @value.eql?('static')
+      if @value.eql?('move') || @value.eql?('chart')#add here the rest || @value.eql?('static')
         @kind = 1
-      elsif @value[-4..-1].eql?('.svg')
       end
     end
   end
