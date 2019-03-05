@@ -27,7 +27,7 @@ class LogScanner
 
   def fetch_next_char
     if (@file.eof)
-      @current_char = '$'
+      @current_char = 'EOF'
     else
       @current_char = @file.readchar # method to get next char
     end
@@ -99,7 +99,7 @@ class LogScanner
     end
 
 
-    if @current_char.eql?('$')
+    if @current_char.eql?('EOF')
       return LOG_TOKEN_KINDS[:EOF]
     end
 

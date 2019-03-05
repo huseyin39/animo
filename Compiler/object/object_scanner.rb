@@ -26,7 +26,7 @@ class ObjectScanner
 
   def fetch_next_char
     if (@file.eof)
-      @current_char = '$'
+      @current_char = 'EOF'
     else
       @current_char = @file.readchar # method to get next char
     end
@@ -66,13 +66,6 @@ class ObjectScanner
       while is_letter?(@current_char) || is_numeric?(@current_char) || @current_char === '_'
         takeIt
       end
-      if (@current_char.eql?('.'))
-        takeIt
-        take('s')
-        take('v')
-        take('g')
-        return OBJECT_TOKEN_KINDS[:FILENAME]
-      end
       return OBJECT_TOKEN_KINDS[:IDENTIFIER]
     end
 
@@ -89,16 +82,38 @@ class ObjectScanner
       takeIt
       return OBJECT_TOKEN_KINDS[:COMMA]
 
-    when '"'
+    when ')'
       takeIt
-      return OBJECT_TOKEN_KINDS[:DOUBLEQUOTE]
+      return OBJECT_TOKEN_KINDS[:RPARENTHESIS]
 
+    when '('
+      takeIt
+      return OBJECT_TOKEN_KINDS[:LPARENTHESIS]
+
+    when '{'
+      takeIt
+      if @current_char.eql?('{')
+        takeIt
+        return OBJECT_TOKEN_KINDS[:LDOUBLEBRACKET]
+      else
+        return OBJECT_TOKEN_KINDS[:CHARACTER]
+      end
+
+    when '}'
+      takeIt
+      if @current_char.eql?('}')
+        takeIt
+        return OBJECT_TOKEN_KINDS[:RDOUBLEBRACKET]
+      else
+        return OBJECT_TOKEN_KINDS[:CHARACTER]
+      end
     end
 
-    if @current_char.eql?('$')
+    if @current_char.eql?('EOF')
       return OBJECT_TOKEN_KINDS[:EOF]
     end
 
+    puts @current_char
     raise 'Unexpected character'
   end
 end

@@ -1,6 +1,7 @@
 begin
 1 sec : robot_1 move (50, 50);
 1 sec : robot_2 move (0, 0);
+2 sec : robot_4 move (7,8);
 3 sec : robot_1 move (-40, -40);
 3 sec : robot_2 move (100, 240);
 4 sec : robot_1 move (300, 100);

@@ -22,6 +22,7 @@ class ObjectParser
     if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[expectedToken])
       @currentToken = @scanner.scan
     else
+      puts @currentToken.kind
       raise 'Syntactic error'
     end
   end
@@ -31,41 +32,76 @@ class ObjectParser
   end
 
   def parse_program_object
+    if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:DESCRIPTION])
+      takeIt
+      parse_description
+    elsif @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:ANIMATION])
+      takeIt
+      parse_animation
+    else
+      raise 'Error'
+    end
+
+  end
+
+  def parse_description
     declaration_AST = parse_declaration
-    accept(:SEMICOLON)
-    while @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:IDENTIFIER])
+    # accept(:SEMICOLON)
+    while @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:CONST]) || @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:FUNCTION])
       declaration_AST2 = parse_declaration
-      accept(:SEMICOLON)
+      # accept(:SEMICOLON)
       declaration_AST = ObjectAST::SequentialDeclaration.new(declaration_AST, declaration_AST2)
     end
-    return ObjectAST::ProgramObject.new(declaration_AST)
+    return ObjectAST::DeclarationBlock.new(declaration_AST)
   end
 
   def parse_declaration
-    identifier_AST = parse_identifier
-    accept(:EQUAL)
-    type_AST = parse_type
-    if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:COMMA])
-      acceptIt
-      accept(:DOUBLEQUOTE)
-      filename_AST = parse_filename
-      accept(:DOUBLEQUOTE)
-      return ObjectAST::SingleDeclaration.new(identifier_AST, type_AST, filename_AST)
+    case @currentToken.kind
+    when OBJECT_TOKEN_KINDS[:CONST]
+      identifier_AST, parameters_AST, string_AST = parse_declaration_bis
+      return ObjectAST::ConstDeclaration.new(identifier_AST, parameters_AST, string_AST)
+    when OBJECT_TOKEN_KINDS[:FUNCTION]
+      identifier_AST, parameters_AST, string_AST = parse_declaration_bis
+      return ObjectAST::FunctionDeclaration(identifier_AST, parameters_AST, string_AST)
     end
-    return ObjectAST::SingleDeclaration.new(identifier_AST, type_AST)
-
+    raise "Expected token: declaration or function; found #{@currentToken.kind}"
   end
 
-  def parse_type
-    value = @currentToken.value.rstrip
-    accept(:TYPE)
-    return ObjectAST::Type.new(value)
+  def parse_declaration_bis
+    acceptIt
+    identifier_AST = parse_identifier
+    accept(:LPARENTHESIS)
+    parameters_AST = parse_formal_parameter
+    accept(:RPARENTHESIS)
+    string_AST = parse_string
+    return identifier_AST, parameters_AST, string_AST
   end
 
-  def parse_filename
+  def parse_animation
+    assignment_AST = parse_assignment
+    accept(:SEMICOLON)
+    while @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:IDENTIFIER])
+      assignment_AST2 = parse_assignment
+      accept(:SEMICOLON)
+      declaration_AST = ObjectAST::SequentialAssignment.new(declaration_AST, declaration_AST2)
+    end
+    return ObjectAST::AssignmentBlock.new(declaration_AST)
+  end
+
+  def parse_assignment
+    identifier_object_AST = parse_identifier
+    accept(:EQUAL)
+    identifier_operator_AST = parse_identifier
+    accept(:LPARENTHESIS)
+    parameters_AST = parse_actual_parameter
+    accept(:RPARENTHESIS)
+    return ObjectAST::Assignment(identifier_object_AST, identifier_operator_AST, parameters_AST)
+  end
+
+  def parse_string
     value = @currentToken.value.rstrip
-    accept(:FILENAME)
-    return ObjectAST::Filename.new(value)
+    accept(:STRING)
+    return ObjectAST::String.new(value)
   end
 
   def parse_identifier
@@ -74,4 +110,21 @@ class ObjectParser
     return AbstractSyntaxTree::Identifier.new(value)
   end
 
+  def parse_formal_parameter
+    if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:RPARENTHESIS])
+      return AST::FormalParameter.new(nil)
+    else
+      parameters_AST = parse_proper_formal_parameter
+    end
+  end
+
+  def parse_proper_formal_parameter
+    parameter_AST = parse_identifier
+    if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:COMMA])
+      acceptIt
+      parameter_AST2 = parse_proper_formal_parameter
+      return AbstractSyntaxTree::ProperFormalParameterSequence.new(parameter_AST, parameter_AST2)
+    end
+    return AbstractSyntaxTree::ProperFormalParameter.new(parameter_AST)
+  end
 end

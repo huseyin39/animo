@@ -11,7 +11,7 @@ module LogAST
       @body = body
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_program_log(self, arg)
     end
   end
@@ -25,7 +25,7 @@ module LogAST
       @lines = lines
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_body(self, arg)
     end
   end
@@ -43,7 +43,7 @@ module LogAST
       @description = description
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_single_line(self, arg)
     end
   end
@@ -57,7 +57,7 @@ module LogAST
       @line2 = line2
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_sequential_line(self, arg)
     end
   end
@@ -72,7 +72,7 @@ module LogAST
       @unit = unit
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_timestamp(self, arg)
     end
   end
@@ -85,7 +85,7 @@ module LogAST
       @expression = expression
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_description(self, arg)
     end
   end
@@ -101,7 +101,7 @@ module LogAST
       @arg = arg
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_unary_expression(self, arg)
     end
   end
@@ -115,7 +115,7 @@ module LogAST
       @arg2 = arg2
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_binary_expression(self, arg)
     end
 
@@ -156,7 +156,7 @@ module LogAST
       @parameter_ast = parameter_ast
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_parameter(self, arg)
     end
   end
@@ -166,7 +166,7 @@ module LogAST
       super(value)
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_integer(self, arg)
     end
 
@@ -188,7 +188,7 @@ module LogAST
       super(value)
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_unit(self, arg)
     end
   end
@@ -202,7 +202,7 @@ module LogAST
       @declaration = nil
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_action(self, arg)
     end
   end
@@ -215,7 +215,7 @@ module LogAST
       @type = type
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_unary_action(self, arg)
     end
   end
@@ -228,7 +228,7 @@ module LogAST
       @type = type
     end
 
-    def visit visitor, arg=nil
+    def accept visitor, arg=nil
       return visitor.visit_binary_action(self, arg)
     end
   end

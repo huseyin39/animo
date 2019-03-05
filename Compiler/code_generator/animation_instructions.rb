@@ -42,7 +42,7 @@ module AnimationInstructions
       begin
         path = File.join(File.dirname(__FILE__ ), "../res/"+@filename+".html")
         file = File.new(path, 'w+')
-        string = "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <script src=\"Chart.js\"></script>\n</head>\n<body>\n  <div class=\"chart-container\" style=\"position: absolute; width:#{@window_width}px; height:#{@window_height}px\">\n    <canvas id=\"chart\"></canvas>\n  </div>\n</body>"
+        string = "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <script src=\"Chart.js\"></script>\n</head>\n<body>\n  <div class=\"chart-container\" style=\"position: absolute; width:#{@window_width}px; height:#{@window_height}px\">\n    <canvas id=\"chart\"></canvas>\n  </div>\n    <script src=\"#{@filename}.js\"></script>\n</body>\n</html>"
         file.write(string)
       ensure
         file.close unless file.nil?
@@ -74,7 +74,6 @@ module AnimationInstructions
     def write file
       path = File.join(File.dirname(__FILE__), '../svg_files/' + @filename)
       width, height = resize_svg(path)
-
       string = "var #{identifier} = draw.image('../svg_files/#{@filename}').size(#{width}, #{height}).cx(#{@window_width/2}).cy(#{@window_height/2});\n"
       file.write(string)
     end
@@ -85,7 +84,10 @@ module AnimationInstructions
       super(identifier, filename, window_width, window_height)
       write(file)
     end
-    #here
+
+    def write file
+      string = ""
+    end
   end
 
   class Instruction

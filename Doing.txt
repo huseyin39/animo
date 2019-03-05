@@ -5,9 +5,16 @@
 
 
 doing :
+- problème EOF chracter
+- Plusieurs ID dispo dans le log; le object sert à les sélectionner !
+: problème => respecter la syntaxe tout de même
+- declaration_ function : checker les types ?
+
+
+ - mise en place des fonctions pour décrire les animations
 - pour move: faire avec setTimeout ?
 - window size => via javascript
-- 1 fichier -> 1 type de log ?
+- 1 fichier -> 1 type de log ? => créer des generate_move etc...
 - mise en place de l'ajustement en fonction du X, Y le plus grand des données.
 - besoin du @types ??
 - afficher échelle

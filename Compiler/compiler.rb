@@ -38,9 +38,9 @@ end
 
 
 
-ast_object = parse_object('test.object')
-ast_log = parse_log('test.log')
-ast = AbstractSyntaxTree::Program.new(ast_object, ast_log)
-checker = Checker.new()
-types = checker.check(ast)
-SvgCodeGenerator.new(types, 'test').generate(ast)
+# ast_object = parse_object('test.object')
+# ast_log = parse_log('test.log')
+# ast = AbstractSyntaxTree::Program.new(ast_object, ast_log)
+# checker = Checker.new()
+# types = checker.check(ast)
+# SvgCodeGenerator.new(types, 'test').generate(ast)
