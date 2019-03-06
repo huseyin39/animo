@@ -27,7 +27,7 @@ class LogScanner
 
   def fetch_next_char
     if (@file.eof)
-      @current_char = 'EOF'
+      @current_char = '$$'
     else
       @current_char = @file.readchar # method to get next char
     end
@@ -38,11 +38,11 @@ class LogScanner
   end
 
   def is_numeric?(lookAhead)
-    lookAhead =~ /[[:digit:]]/
+    lookAhead =~ /\d/
   end
 
   def scan
-    while @current_char == ' ' || @current_char == "\n" || @current_char == "\r" || @current_char == "\r\n"
+    while @current_char =~ /[[:space:]]/
       takeIt
     end
     @current_value = StringIO.new
@@ -63,9 +63,9 @@ class LogScanner
     end
 
 
-    if is_letter?(@current_char)
+    if  @current_char =~ /[a-zA-Z]/
       takeIt
-      while is_letter?(@current_char) || is_numeric?(@current_char) || @current_char === '_'
+      while @current_char =~ /\w/
         takeIt
       end
       return LOG_TOKEN_KINDS[:IDENTIFIER]
@@ -94,12 +94,31 @@ class LogScanner
       takeIt
       return LOG_TOKEN_KINDS[:LPARENTHESIS]
 
-    when '-'
+    when '['
+      takeIt
+      if @current_char.eql?('[')
+        takeIt
+        return LOG_TOKEN_KINDS[:LSTRING]
+      else
+        return LOG_TOKEN_KINDS[:CHAR]
+      end
+
+    when ']'
+      takeIt
+      if @current_char.eql?(']')
+        takeIt
+        return LOG_TOKEN_KINDS[:RSTRING]
+      else
+        return LOG_TOKEN_KINDS[:CHAR]
+      end
+
+    when '-' #minus
       return scan_numeric
+
     end
 
 
-    if @current_char.eql?('EOF')
+    if @current_char.eql?('$$')
       return LOG_TOKEN_KINDS[:EOF]
     end
 

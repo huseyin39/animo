@@ -26,23 +26,22 @@ class ObjectScanner
 
   def fetch_next_char
     if (@file.eof)
-      @current_char = 'EOF'
+      @current_char = '$$'
     else
       @current_char = @file.readchar # method to get next char
     end
   end
 
-  def is_letter?(character)
-    character =~ /[[:alpha:]]/
+  def is_letter?(lookAhead)
+    lookAhead =~ /[[:alpha:]]/
   end
 
   def is_numeric?(lookAhead)
-    lookAhead =~ /[[:digit:]]/
+    lookAhead =~ /\d/
   end
 
-
   def scan
-    while @current_char == ' ' || @current_char == "\n" || @current_char == "\r" || @current_char == "\r\n"
+    while @current_char =~ /[[:space:]]/
       takeIt
     end
     @current_value = StringIO.new
@@ -50,7 +49,6 @@ class ObjectScanner
     #puts "Object : Kind : #{@current_kind} value : #{@current_value.string}"
     return ObjectToken.new(@current_kind, @current_value.string)
   end
-
 
   def scan_token
     # if is_numeric?(@current_char) #Integer
@@ -61,19 +59,15 @@ class ObjectScanner
     #   return OBJECT_TOKEN_KINDS[:INTEGER]
     # end
 
-    if is_letter?(@current_char)
+    if @current_char =~ /[a-zA-Z]/
       takeIt
-      while is_letter?(@current_char) || is_numeric?(@current_char) || @current_char === '_'
+      while @current_char =~ /\w/
         takeIt
       end
       return OBJECT_TOKEN_KINDS[:IDENTIFIER]
     end
 
     case @current_char
-    when '='
-      takeIt
-      return OBJECT_TOKEN_KINDS[:EQUAL]
-
     when ';'
       takeIt
       return OBJECT_TOKEN_KINDS[:SEMICOLON]
@@ -96,7 +90,7 @@ class ObjectScanner
         takeIt
         return OBJECT_TOKEN_KINDS[:LDOUBLEBRACKET]
       else
-        return OBJECT_TOKEN_KINDS[:CHARACTER]
+        return OBJECT_TOKEN_KINDS[:CHAR]
       end
 
     when '}'
@@ -105,15 +99,15 @@ class ObjectScanner
         takeIt
         return OBJECT_TOKEN_KINDS[:RDOUBLEBRACKET]
       else
-        return OBJECT_TOKEN_KINDS[:CHARACTER]
+        return OBJECT_TOKEN_KINDS[:CHAR]
       end
     end
 
-    if @current_char.eql?('EOF')
+    if @current_char.eql?('$$')
       return OBJECT_TOKEN_KINDS[:EOF]
     end
 
-    puts @current_char
-    raise 'Unexpected character'
+    takeIt
+    return OBJECT_TOKEN_KINDS[:CHAR]
   end
 end

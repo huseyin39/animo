@@ -5,9 +5,9 @@ class ObjectToken
     @kind = kind
     @value = value
     if (@kind == OBJECT_TOKEN_KINDS[:IDENTIFIER])
-      if @value.eql?('animation')#add here the rest
+      if @value.eql?('Animation')#add here the rest
         @kind = 1
-      elsif @value.eql?('description')
+      elsif @value.eql?('Description')
         @kind = 2
       end
     end
@@ -18,7 +18,7 @@ end
 OBJECT_TOKEN_KINDS = {IDENTIFIER: 0,
                       ANIMATION: 1,
                       DESCRIPTION: 2,
-                      EQUAL: 3,
+                      CHAR: 3, #characters differents from [a-zA-Z0-9] () ,;
                       SEMICOLON: 4,
                       COMMA: 5,
                       CHARACTER: 6,

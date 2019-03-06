@@ -17,6 +17,7 @@ class Checker
 
   def visit_program program, arg
     program.program_object.accept(self, nil)
+    puts @symbol_table.to_s
     program.program_log.accept(self, nil)
     return nil
   end
@@ -44,7 +45,7 @@ class Checker
   end
 
   def visit_timestamp timestamp, arg
-    temp_time = timestamp.integer.accept(self, arg).value.to_i
+    temp_time = timestamp.integer.accept(self, arg).to_i
     if (@current_time.nil?)
       @current_time = temp_time
     elsif (temp_time < @current_time)
@@ -57,56 +58,41 @@ class Checker
   end
 
   def visit_integer integer, arg
-    return integer
+    return integer.value
   end
 
   def visit_unit unit, arg
     return nil
   end
 
-  def visit_description description, arg
-    id_declaration = description.identifier.accept(self, nil)
-    if (id_declaration.nil?)
-      return nil
-    end
-    id_type = id_declaration.type.accept(self, nil)
-    description.expression.accept(self, id_type)
-    return nil
-  end
-
-  def visit_unary_expression unary_expression, arg #arg = type of ID
-    type_unary_expression = unary_expression.unary_action.accept(self, nil)
-    type_arg = unary_expression.arg.accept(self, nil)
-    if (! (arg.eql?(type_binary_expression)) )
-      raise "type of identifier #{arg} and of expression #{type_unary_expression} are different "
-    elsif  (type_arg != type_unary_expression )
-      raise 'type of argument must be ' + type_arg.to_s
+  def visit_call_command command, arg
+    object_id = command.object_id.accept(self, nil)
+    action_id = command.action_id.accept(self, nil)
+    number_actual_parameter = command.actual_parameter.accept(self, nil)
+    number_formal_parameters = @symbol_table.retrieve(object_id, action_id)
+    if number_formal_parameters.nil?
+      raise "The animation #{action_id} has not been declared for the object #{object_id} in the object file"
+    elsif number_actual_parameter != number_formal_parameters
+      raise "The animation #{action_id} requires #{number_formal_parameters} parameters, #{number_actual_parameter} were given"
     else
       return nil
     end
   end
 
-  def visit_binary_expression binary_expression, arg
-    type_value_expected, type_binary_expression = binary_expression.binary_action.accept(self, arg)
-    type_arg1 = binary_expression.arg1.accept(self, nil)
-    type_arg2 = binary_expression.arg2.accept(self, nil)
-    if (! (arg.eql?(type_binary_expression)) )
-      raise "type of identifier (#{arg}) and of action (#{type_binary_expression}) are different"
-    elsif (! (type_arg1 == type_value_expected) )
-      raise 'type of argument1 must be ' + type_arg1.to_s
-    elsif (! (type_arg2 == type_value_expected) )
-      raise 'type of argument2 must be ' + type_arg2.to_s
-    end
-    return nil
+  def visit_actual_parameter actual_parameter, arg
+    number_parameters = actual_parameter.parameters.accept(self, nil)
   end
 
-  def visit_unary_action unary_action, arg
-    return unary_action.type
+  def visit_proper_actual_parameter proper_actual_parameter, arg
+    proper_actual_parameter.parameter.accept(self, nil)
+    return 1
   end
 
-
-  def visit_binary_action binary_action, arg
-    return binary_action.type, binary_action.value
+  def visit_proper_actual_parameter_sequence proper_actual_parameter_sequence, arg
+    length = 0
+    length += proper_actual_parameter_sequence.parameter1.accept(self, nil)
+    length += proper_actual_parameter_sequence.parameter2.accept(self, nil)
+    return length
   end
 
   def visit_parameter parameter, arg
@@ -115,53 +101,76 @@ class Checker
 
 
   def visit_program_object program_object, arg
-    program_object.declarations.accept(self, nil)
+    program_object.command.accept(self, nil)
   end
 
 
-  def visit_sequential_declaration sequential_declaration, arg
-    sequential_declaration.declaration1.accept(self, nil)
-    sequential_declaration.declaration2.accept(self, nil)
+  def visit_sequential_command sequential_command, arg
+    sequential_command.command1.accept(self, nil)
+    sequential_command.command2.accept(self, nil)
   end
 
-  def visit_single_declaration single_declaration, arg
-    single_declaration.type.accept(self, nil)
-    if (!single_declaration.filename.nil?)
-      single_declaration.filename.accept(self, nil)
-    end
-    @symbol_table.insert(single_declaration.identifier.value, single_declaration)
+  def visit_animation_command animation_command, arg
+    object_id = animation_command.object_ID.accept(self, nil)
+    action_id = animation_command.action_ID.accept(self, nil)
+    fps = animation_command.formal_parameters_sequence.accept(self, nil)
+    expression = animation_command.expression.accept(self, nil)
+    @symbol_table.insert(object_id, {action_id => [fps, expression]})
   end
 
-  def visit_type type, arg
-    type_value = type.value
-    case type_value
-    when 'move', 'chart'
-      if (@type.nil?)
-        @type = type_value
-        return type_value
-      elsif (@type == type_value)
-        return type_value
-      else
-        raise "One type per object file. '#{@type}' and '#{type_value}' found"
-      end
-    end
-    raise "#{type_value} is not recognized"
+  def visit_description_command description_command, arg
+    description_command.expression.accept(self, nil)
+    object_id = description_command.object_ID.accept(self, nil)
   end
 
-  def visit_filename filename, arg
-    file = File.join(File.dirname(__FILE__), 'svg_files/' + filename.value)
-    if (!File.file?(file))
-      raise "#{file} does not exist"
+  def visit_expression expression, arg
+    if expression.value.length == 0
+      raise 'Expression is empty'
+    else
+      return expression.value
     end
   end
+
+  def visit_formal_parameter formal_parameter, arg
+    number_parameters = formal_parameter.parameters.accept(self, nil)
+    return number_parameters
+  end
+
+  def visit_proper_formal_parameter proper_formal_parameter, arg
+    proper_formal_parameter.parameter.accept(self, nil)
+    return 1
+  end
+
+  def visit_proper_formal_parameter_sequence proper_formal_parameter_sequence, arg
+    length = 0
+    length += proper_formal_parameter_sequence.parameter1.accept(self, nil)
+    length += proper_formal_parameter_sequence.parameter2.accept(self, nil)
+    return length
+  end
+
+
+  # def visit_type type, arg
+  #   type_value = type.value
+  #   case type_value
+  #   when 'move', 'chart'
+  #     if (@type.nil?)
+  #       @type = type_value
+  #       return type_value
+  #     elsif (@type == type_value)
+  #       return type_value
+  #     else
+  #       raise "One type per object file. '#{@type}' and '#{type_value}' found"
+  #     end
+  #   end
+  #   raise "#{type_value} is not recognized"
+  # end
 
   def visit_identifier id, arg
-    id.declaration = @symbol_table.retrieve(id.value)
-    return id.declaration
-    # if (id.declaration.nil?)
-    #   raise "#{id.value} has not been initialized"
-    # else
-    #   return id.declaration
-    # end
+    return id.value
   end
+
+  def visit_string string, arg
+    return string.value
+  end
+
 end

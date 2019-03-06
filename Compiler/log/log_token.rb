@@ -5,16 +5,10 @@ class LogToken
     @kind = kind
     @value = value
     if (@kind == LOG_TOKEN_KINDS[:IDENTIFIER])
-      if @value.eql?('move')#add here the rest
-        @kind = 2
-      elsif @value.eql?('data')
-        @kind = 1
-      else
-        (LOG_TOKEN_KINDS[:BEGIN]..LOG_TOKEN_KINDS[:SEC]).each do |i|
-          if @value.eql?(VALUE[i])
-            @kind = i
-            break
-          end
+      (LOG_TOKEN_KINDS[:BEGIN]..LOG_TOKEN_KINDS[:SEC]).each do |i|
+        if @value.eql?(VALUE[i])
+          @kind = i
+          break
         end
       end
     end
@@ -32,8 +26,7 @@ class LogToken
 end
 
 LOG_TOKEN_KINDS = {INTEGER: 0,
-                   UNARYACTION: 1,
-                   BINARYACTION: 2,
+                   CHAR: 1,
                    STRING: 3,
                    IDENTIFIER: 4,
                    BEGIN: 5,

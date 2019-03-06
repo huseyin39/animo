@@ -1,14 +1,6 @@
-﻿Doing:
-- Mod�le : dont forget to write the require (e.g. fast_image)
-- In write_lines : Detect x,y then calculate angle and direction
-
-
-
+﻿
 doing :
-- problème EOF chracter
-- Plusieurs ID dispo dans le log; le object sert à les sélectionner !
-: problème => respecter la syntaxe tout de même
-- declaration_ function : checker les types ?
+- voir comment remplacer les paramètres formels => génération de code mise en place
 
 
  - mise en place des fonctions pour décrire les animations
@@ -23,7 +15,9 @@ doing :
 
 remplacer parameter-value par des mots-clés : on, off ...
 
-done : handled case EOF occurs before end of Line or declaration
+done :
+- Plusieurs ID dispo dans le log; 'object' sert à les sélectionner !
+handled case EOF occurs before end of Line or declaration
 type checking
 mettre en place le fait de checker que le timestamp est bien croissant
 checker symbol table

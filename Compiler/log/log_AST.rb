@@ -77,87 +77,68 @@ module LogAST
     end
   end
 
-  class Description < (AbstractSyntaxTree::AST)
-    attr_accessor :identifier, :expression
+  class CallCommand < (AbstractSyntaxTree::AST)
+    attr_accessor :object_id, :action_id, :actual_parameter
 
-    def initialize identifier, expression
-      @identifier = identifier
-      @expression = expression
+    def initialize object_id, action_id, actual_parameter
+      @object_id = object_id
+      @action_id = action_id
+      @actual_parameter = actual_parameter
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_description(self, arg)
+      return visitor.visit_call_command(self, arg)
     end
   end
 
-  class Expression < (AbstractSyntaxTree::AST)
-  end
 
-  class UnaryExpression < Expression
-    attr_accessor :unary_action, :arg
+  class ActualParameter < (AbstractSyntaxTree::AST)
+    attr_accessor :parameters
 
-    def initialize unary_action, arg
-      @unary_action = unary_action
-      @arg = arg
+    def initialize parameters
+      @parameters = parameters
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_unary_expression(self, arg)
+      if @parameters.nil?
+        return 0
+      end
+      return visitor.visit_actual_parameter(self, arg)
     end
   end
 
-  class BinaryExpression < Expression
-    attr_accessor :binary_action, :arg1, :arg2
+  class ProperActualParameter < ActualParameter
+    attr_accessor :parameter
 
-    def initialize binary_action, arg1, arg2
-      @binary_action = binary_action
-      @arg1 = arg1
-      @arg2 = arg2
+    def initialize parameter
+      @parameter = parameter
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_binary_expression(self, arg)
+      return visitor.visit_proper_actual_parameter(self, arg)
     end
-
   end
 
-  # class Parameter < (AbstractSyntaxTree::AST) #unused
-  # end
-  #
-  # class SingleParameter < Parameter
-  #   attr_accessor :parameter_value
-  #
-  #   def initialize parameter_value
-  #     @parameter_value = parameter_value
-  #   end
-  #
-  #   def visit visitor, arg=nil
-  #     return visitor.visit_single_parameter(self, arg)
-  #   end
-  # end
-  #
-  # class SequentialParameter < Parameter
-  #   attr_accessor :parameter1, :parameter2
-  #
-  #   def initialize parameter1, parameter2
-  #     @parameter1 = parameter1
-  #     @parameter2 = parameter2
-  #   end
-  #
-  #   def visit visitor, arg=nil
-  #     return visitor.visit_sequential_parameter(self, arg)
-  #   end
-  # end
+  class ProperActualParameterSequence < ActualParameter
+    attr_accessor :parameter1, :parameter2
 
-  class Parameter < (AbstractSyntaxTree::AST)
-    attr_accessor :parameter_ast
-
-    def initialize parameter_ast
-      @parameter_ast = parameter_ast
+    def initialize parameter1, parameter2
+      @parameter1 = parameter1
+      @parameter2 = parameter2
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_parameter(self, arg)
+      return visitor.visit_proper_actual_parameter_sequence(self, arg)
+    end
+  end
+
+  class String < (AbstractSyntaxTree::Terminal)
+    def initialize value
+      super(value)
+    end
+
+    def accept visitor, arg=nil
+      return visitor.visit_string(self, arg)
     end
   end
 
@@ -170,13 +151,13 @@ module LogAST
       return visitor.visit_integer(self, arg)
     end
 
-    def == object
-      if (!object.nil? && object.instance_of?(IntegerLiteral))
-        return true
-      else
-        return false
-      end
-    end
+    # def == object
+    #   if (!object.nil? && object.instance_of?(IntegerLiteral))
+    #     return true
+    #   else
+    #     return false
+    #   end
+    # end
 
     def to_s
       'Integer'
@@ -190,46 +171,6 @@ module LogAST
 
     def accept visitor, arg=nil
       return visitor.visit_unit(self, arg)
-    end
-  end
-
-
-  class Action < (AbstractSyntaxTree::Terminal) #unused
-    attr_accessor :declaration
-
-    def initialize value
-      super(value)
-      @declaration = nil
-    end
-
-    def accept visitor, arg=nil
-      return visitor.visit_action(self, arg)
-    end
-  end
-
-  class UnaryAction < (AbstractSyntaxTree::Terminal)
-    attr_accessor :type
-
-    def initialize value, type
-      super(value)
-      @type = type
-    end
-
-    def accept visitor, arg=nil
-      return visitor.visit_unary_action(self, arg)
-    end
-  end
-
-  class BinaryAction < (AbstractSyntaxTree::Terminal)
-    attr_accessor :type
-
-    def initialize value, type
-      super(value)
-      @type = type
-    end
-
-    def accept visitor, arg=nil
-      return visitor.visit_binary_action(self, arg)
     end
   end
 end

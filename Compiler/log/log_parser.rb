@@ -74,74 +74,65 @@ class LogParser
   end
 
   def parse_description
-    identifier_AST = parse_identifier
-    if @currentToken.value.eql?('move')
-      type = LogAST::IntegerLiteral.new(nil)
-    elsif @currentToken.value.eql?('data')
-      type = LogAST::IntegerLiteral.new(nil)
-    end
-    if @currentToken.kind.eql?(LOG_TOKEN_KINDS[:UNARYACTION])
-      description_AST = parse_unary_expression(type)
-    elsif @currentToken.kind.eql?(LOG_TOKEN_KINDS[:BINARYACTION])
-      description_AST = parse_binary_expression(type)
-    else
-      raise 'Syntactic error'
-    end
-    return LogAST::Description.new(identifier_AST, description_AST)
+    object_id_AST = parse_identifier
+    action_id_AST = parse_identifier
+    actual_parameters_AST = parse_actual_parameter
+    return LogAST::CallCommand.new(object_id_AST, action_id_AST, actual_parameters_AST)
   end
 
-  def parse_unary_expression type
-    unary_action_AST = parse_unary_action(type)
+  def parse_actual_parameter
     accept(:LPARENTHESIS)
-    parameter_value_AST = parse_parameter
-    accept(:RPARENTHESIS)
-    return LogAST::UnaryExpression.new(unary_action_AST, parameter_value_AST)
-  end
-
-  def parse_binary_expression type
-    binary_action_AST = parse_binary_action(type)
-    accept(:LPARENTHESIS)
-    parameter_1_AST = parse_parameter
-    accept(:COMMA)
-    parameter_2_AST = parse_parameter
-    accept(:RPARENTHESIS)
-    return LogAST::BinaryExpression.new(binary_action_AST, parameter_1_AST, parameter_2_AST)
-  end
-
-  def parse_unary_action type
-    unary_action_kind = @currentToken.value.rstrip
-    accept(:UNARYACTION)
-    return LogAST::UnaryAction.new(unary_action_kind, type)
-  end
-
-  def parse_binary_action type
-    binary_action_kind = @currentToken.value.rstrip
-    accept(:BINARYACTION)
-    return LogAST::BinaryAction.new(binary_action_kind, type)
-  end
-
-  def parse_parameters #unused
-    parameter_value_AST = parse_parameter
-    while @currentToken.kind.eql? LOG_TOKEN_KINDS[:COMMA]
+    if @currentToken.kind.eql?(LOG_TOKEN_KINDS[:RPARENTHESIS])
       acceptIt
-      parameter_value_bis_AST = parse_parameter
-      parameter_value_AST = LogAST::SequentialParameter.new(parameter_value_AST, parameter_value_bis_AST)
+      return LogAST::ActualParameter.new(nil)
+    else
+      parameters_AST = parse_proper_actual_parameter
+      accept(:RPARENTHESIS)
+      return LogAST::ActualParameter.new(parameters_AST)
     end
-    return parameter_value_AST
+  end
+
+  def parse_proper_actual_parameter
+    parameter_AST = LogAST::ProperActualParameter.new(parse_parameter)
+    if @currentToken.kind.eql?(LOG_TOKEN_KINDS[:COMMA])
+      acceptIt
+      parameter_AST2 = parse_proper_actual_parameter
+      return LogAST::ProperActualParameterSequence.new(parameter_AST, parameter_AST2)
+    end
+    return parameter_AST
   end
 
   def parse_parameter
-    value = @currentToken.value
-    parameter_ast = nil
     case @currentToken.kind
+    when LOG_TOKEN_KINDS[:LSTRING]
+      acceptIt
+      string_AST = parse_string
+      accept(:RSTRING)
+      return string_AST
+    when LOG_TOKEN_KINDS[:IDENTIFIER]
+      id_AST =  parse_identifier
+      return id_AST
     when LOG_TOKEN_KINDS[:INTEGER]
-      acceptIt
-      parameter_ast = LogAST::IntegerLiteral.new(value)
-    when LOG_TOKEN_KINDS[:IDENTIFIER] #to change to keyword
-      acceptIt
-      parameter_ast = AbstractSyntaxTree::Identifier.new(value)
+      int_AST = parse_integer
+      return int_AST
     end
-    return LogAST::Parameter.new(parameter_ast)
+
+    raise 'Unexepcted parameter type'
+  end
+
+  def parse_string
+    value = ''
+    while !(@currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:RSTRING]))
+      value << @currentToken.value
+      acceptIt
+    end
+    return LogAST::String.new(value)
+  end
+
+  def parse_int
+    value = @currentToken.value.rstrip
+    accept(:INTEGER)
+    return LogAST::IntegerLiteral.new(value)
   end
 
   def parse_identifier

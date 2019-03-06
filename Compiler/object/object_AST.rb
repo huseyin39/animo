@@ -5,11 +5,10 @@ require_relative '../AST'
 module ObjectAST
 
   class ProgramObject < (AbstractSyntaxTree::AST)
-    attr_accessor :declaration_block
+    attr_accessor :command
 
-    def initialize declaration_block, command_block
-      @declaration_block = declaration_block
-      @command_block = command_block
+    def initialize  command
+      @command = command
     end
 
     def accept visitor, arg=nil
@@ -17,116 +16,109 @@ module ObjectAST
     end
   end
 
-  class DeclarationBlock < (AbstractSyntaxTree::AST)
-    attr_accessor :declarations
-    def initialize declarations
-      @declarations = declarations
-    end
-
-    def accept visitor, arg=nil
-      return visitor.visit_declaration_block(self, arg)
-    end
+  class Command < (AbstractSyntaxTree::AST)
   end
 
-  class AssignmentBlock < (AbstractSyntaxTree::AST)
-    attr_accessor :assignments
-    def initialize assignments
-      @assignments = assignments
-    end
+  class AnimationCommand < Command
+    attr_accessor :object_ID, :action_ID, :formal_parameters_sequence, :expression
 
-    def accept visitor, arg=nil
-      return visitor.visit_assignment_block(self, arg)
-    end
-  end
-
-  class Declaration < (AbstractSyntaxTree::AST)
-  end
-
-  class FunctionDeclaration < Declaration
-    attr_accessor :identifier, :formal_parameters_sequence, :string
-
-    def initialize identifier, formal_parameters_sequence, string
-      @identifier = identifier
+    def initialize object_ID, action_ID, formal_parameters_sequence, expression
+      @object_ID = object_ID
+      @action_ID = action_ID
       @formal_parameters_sequence = formal_parameters_sequence
-      @string = string
+      @expression = expression
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_function_declaration(self, arg)
+      return visitor.visit_animation_command(self, arg)
     end
   end
 
-  class ConstDeclaration < Declaration
-    attr_accessor :identifier, :formal_parameters_sequence, :string
+  class DescriptionCommand < Command
+    attr_accessor :object_ID, :expression
 
-    def initialize identifier, formal_parameters_sequence, string
-      @identifier = identifier
-      @formal_parameters_sequence = formal_parameters_sequence
-      @string = string
+    def initialize object_ID, expression
+      @object_ID = object_ID
+      @expression = expression
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_const_declaration(self, arg)
+      return visitor.visit_description_command(self, arg)
     end
   end
 
-  class SequentialDeclaration < Declaration
-    attr_accessor :declaration1, :declaration2
+  class SequentialCommand < Command
+    attr_accessor :command1, :command2
 
-    def initialize declaration1, declaration2
-      @declaration1 = declaration1
-      @declaration2 = declaration2
+    def initialize command1, command2
+      @command1 = command1
+      @command2 = command2
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_sequential_declaration(self, arg)
+      return visitor.visit_sequential_command(self, arg)
     end
   end
 
-  class Assignment < (AbstractSyntaxTree::AST)
-    attr_accessor :identifier_object, :identifier_operator, :actual_parameters_sequence
 
-    def initialize identifier_object, identifier_operator, actual_parameters_sequence
-      @identifier_object = identifier_object
-      @identifier_operator = identifier_operator
-      @actual_parameters_sequence = actual_parameters_sequence
-    end
-
-    def accept visitor, arg=nil
-      return visitor.visit_assignment(self, arg)
-    end
-  end
-
-  class SequentialDeclaration < Declaration
-    attr_accessor :declaration1, :declaration2
-
-    def initialize declaration1, declaration2
-      @declaration1 = declaration1
-      @declaration2 = declaration2
-    end
-
-    def accept visitor, arg=nil
-      return visitor.visit_sequential_declaration(self, arg)
-    end
-  end
-
-  class String < (AbstractSyntaxTree::Terminal)
+  class Expression < (AbstractSyntaxTree::Terminal)
     def initialize value
       super(value)
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_string(self, arg)
+      return visitor.visit_expression(self, arg)
     end
   end
 
-  class Type < (AbstractSyntaxTree::Terminal)
-    def initialize value
-      super(value)
+
+  class FormalParameter < (AbstractSyntaxTree::AST)
+    attr_accessor :parameters
+
+    def initialize parameters
+      @parameters = parameters
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_type(self, arg)
+      if @parameters.nil?
+        return 0
+      end
+      return visitor.visit_formal_parameter(self, arg)
     end
   end
+
+  class ProperFormalParameter < FormalParameter
+    attr_accessor :parameter
+
+    def initialize parameter
+      @parameter = parameter
+    end
+
+    def accept visitor, arg=nil
+      return visitor.visit_proper_formal_parameter(self, arg)
+    end
+  end
+
+  class ProperFormalParameterSequence < FormalParameter
+    attr_accessor :parameter1, :parameter2
+
+    def initialize parameter1, parameter2
+      @parameter1 = parameter1
+      @parameter2 = parameter2
+    end
+
+    def accept visitor, arg=nil
+      return visitor.visit_proper_formal_parameter_sequence(self, arg)
+    end
+  end
+
+  # class Type < (AbstractSyntaxTree::Terminal)
+  #   def initialize value
+  #     super(value)
+  #   end
+  #
+  #   def accept visitor, arg=nil
+  #     return visitor.visit_type(self, arg)
+  #   end
+  # end
 end
