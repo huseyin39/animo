@@ -1,21 +1,25 @@
-require_relative 'symbol_table'
-require_relative 'log/log_AST'
-
-class Checker
-  def initialize
-    @symbol_table = SymbolTable.new
-    @current_time = nil
+class CodeGenerator
+  def initialize filename, symbol_table
+    @filename = filename
+    @file = nil
+    @symbol_table = symbol_table
+    @current_time = 0
+    @timestamps = Hash.new #{object_id: [t0, .... t-1, t]}
   end
 
-  def check ast
-    ast.accept(self, nil)
-    return @symbol_table
+  def generate ast
+    begin
+      path = File.join(File.dirname(__FILE__ ), "../res/" + @filename + ".animo")
+      @file = File.new(path, 'w+')
+      ast.accept(self, nil)
+    ensure
+      @file.close unless @file.nil?
+    end
   end
 
   def visit_program program, arg
     program.program_object.accept(self, nil)
-    puts @symbol_table.to_s
-    program.program_log.accept(self, nil)
+    #program.program_log.accept(self, nil)
     return nil
   end
 
@@ -25,28 +29,29 @@ class Checker
     program_object.command.accept(self, nil)
   end
 
-
   def visit_sequential_command sequential_command, arg
     sequential_command.command1.accept(self, nil)
     sequential_command.command2.accept(self, nil)
   end
 
-  def visit_animation_command animation_command, arg
-    object_id = animation_command.object_ID.accept(self, nil)
-    action_id = animation_command.action_ID.accept(self, nil)
-    fps, parameters_ID = animation_command.formal_parameters_sequence.accept(self, nil)
-    instructions = animation_command.instructions.accept(self, nil)
-    @symbol_table.insert(object_id, {action_id => [fps, parameters_ID, instructions]})
+  def visit_animation_command animation_command, arg #unused in this part
+    # object_id = animation_command.object_ID.accept(self, nil)
+    # action_id = animation_command.action_ID.accept(self, nil)
+    # fps, parameters_ID = animation_command.formal_parameters_sequence.accept(self, nil)
+    # instructions = animation_command.instructions.accept(self, nil)
+    # @symbol_table.insert(object_id, {action_id => [fps, parameters_ID, instructions]})
   end
 
   def visit_description_command description_command, arg
-    description_command.instructions.accept(self, nil)
-    description_command.object_ID.accept(self, nil)
+    instructions = description_command.instructions.accept(self, nil)
+    object_id = description_command.object_ID.accept(self, nil) #for the moment unused
+    @file.write(instructions+"\n")
   end
 
+  ### tout ça inutile pour l'instant à remove
   def visit_instructions instructions, arg
     if instructions.value.length == 0
-      raise 'Expression is empty'
+      raise 'Instruction is empty'
     else
       return instructions.value
     end
@@ -58,19 +63,14 @@ class Checker
   end
 
   def visit_proper_formal_parameter proper_formal_parameter, arg
-    parameter =  proper_formal_parameter.parameter.accept(self, nil)
-    return 1, [parameter]
+    proper_formal_parameter.parameter.accept(self, nil)
+    return 1
   end
 
   def visit_proper_formal_parameter_sequence proper_formal_parameter_sequence, arg
     length = 0
-    parameters = []
-    len, param = proper_formal_parameter_sequence.parameter1.accept(self, nil)
-    length += len
-    parameters.push(*param)
-    len, param = proper_formal_parameter_sequence.parameter2.accept(self, nil)
-    length += len
-    parameters.push(*param)
+    length += proper_formal_parameter_sequence.parameter1.accept(self, nil)
+    length += proper_formal_parameter_sequence.parameter2.accept(self, nil)
     return length
   end
 
@@ -100,14 +100,12 @@ class Checker
 
   def visit_timestamp timestamp, arg
     temp_time = timestamp.integer.accept(self, arg).to_i
-    if (@current_time.nil?)
-      @current_time = temp_time
-    elsif (temp_time < @current_time)
-      raise 'Error: Time must be increasing'
-    else
-      @current_time = temp_time
+    unit = timestamp.unit.accept(self, arg)
+    case unit
+    when 'sec'
+      temp_time = temp_time*1000
     end
-    timestamp.unit.accept(self, arg)
+    @current_time = temp_time
     return nil
   end
 
@@ -162,4 +160,5 @@ class Checker
   def visit_unit unit, arg
     return nil
   end
+
 end

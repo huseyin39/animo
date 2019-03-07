@@ -77,7 +77,7 @@ class ObjectParser
       value << @currentToken.value
       acceptIt
     end
-    return ObjectAST::Expression.new(value)
+    return ObjectAST::Instructions.new(value)
   end
 
   def parse_identifier

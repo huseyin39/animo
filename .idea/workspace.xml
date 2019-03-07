@@ -3,20 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="46daa738-b3f6-4d29-9565-eb6b67e43740" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/AST.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/AST.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler/checker.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/checker.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler/compiler.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/compiler.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/log/log_AST.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/log/log_AST.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/log/log_parser.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/log/log_parser.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/log/log_scanner.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/log/log_scanner.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/log/log_token.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/log/log_token.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler/object/object_AST.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/object/object_AST.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler/object/object_parser.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/object/object_parser.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/object/object_scanner.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/object/object_scanner.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/object/object_token.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/object/object_token.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler/symbol_table.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/symbol_table.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler/test_files/test.log" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/test_files/test.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/test_files/test.object" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/test_files/test.object" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Doing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Doing.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,7 +20,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Animo@ObjectToken.rcov" NAME="ObjectToken Coverage Results" MODIFIED="1551090256130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" MODULE_NAME="untitled" />
     <SUITE FILE_PATH="coverage/Animo@log_lexer.rcov" NAME="compiler Coverage Results" MODIFIED="1549155341261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/fastimage-2.1.5/lib" MODULE_NAME="untitled" />
-    <SUITE FILE_PATH="coverage/Animo@compiler.rcov" NAME="compiler Coverage Results" MODIFIED="1551894451139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/fastimage-2.1.5/lib" MODULE_NAME="untitled" />
+    <SUITE FILE_PATH="coverage/Animo@compiler.rcov" NAME="compiler Coverage Results" MODIFIED="1551972881433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/fastimage-2.1.5/lib" MODULE_NAME="untitled" />
     <SUITE FILE_PATH="coverage/Animo@Move.rcov" NAME="Move Coverage Results" MODIFIED="1547028455537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="untitled" />
     <SUITE FILE_PATH="coverage/Animo@log_token.rcov" NAME="log_lexer Coverage Results" MODIFIED="1548978555699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/fastimage-2.1.5/lib" MODULE_NAME="untitled" />
     <SUITE FILE_PATH="coverage/Animo@fastimage.rcov" NAME="fastimage Coverage Results" MODIFIED="1547027989453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/fastimage-2.1.5/lib" MODULE_NAME="untitled" />
@@ -38,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Compiler/symbol_table.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="11" column="117" selection-start-line="11" selection-start-column="117" selection-end-line="11" selection-end-column="117" />
+            <state relative-caret-position="180">
+              <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -47,26 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Compiler/compiler.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="42" selection-start-line="42" selection-end-line="46" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Compiler/log/log_AST.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="130" column="28" selection-start-line="130" selection-start-column="28" selection-end-line="130" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Compiler/log/log_parser.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="95" column="70" selection-start-line="95" selection-start-column="70" selection-end-line="95" selection-end-column="70" />
+            <state relative-caret-position="138">
+              <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -74,35 +48,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Compiler/checker.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-99">
-              <caret line="73" column="108" selection-start-line="73" selection-start-column="108" selection-end-line="73" selection-end-column="108" />
+            <state relative-caret-position="345">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Doing.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="89" selection-start-line="3" selection-start-column="89" selection-end-line="3" selection-end-column="89" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Doing.txt">
+        <entry file="file://$PROJECT_DIR$/Compiler/code_generator/code_generator.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="78" lean-forward="true" selection-start-line="9" selection-start-column="78" selection-end-line="9" selection-end-column="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Compiler/test_files/test.object">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="34" lean-forward="true" selection-start-line="3" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Compiler/test_files/test.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+            <state relative-caret-position="75">
+              <caret line="50" column="45" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -112,8 +77,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Ruby Class Template" />
         <option value="Ruby Module Template" />
+        <option value="Ruby Class Template" />
       </list>
     </option>
   </component>
@@ -143,6 +108,7 @@
       <find>PARENTHESIS</find>
       <find>visit_string</find>
       <find>puts</find>
+      <find>expression</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,7 +130,6 @@
         <option value="$PROJECT_DIR$/Compiler/dsl/object_token.rb" />
         <option value="$PROJECT_DIR$/Compiler/dsl/object_scanner.rb" />
         <option value="$PROJECT_DIR$/Compiler/code_generator/animation_generator.rb" />
-        <option value="$PROJECT_DIR$/Compiler/code_generator/code_generator.rb" />
         <option value="$PROJECT_DIR$/Compiler/code_generator/animation_instructions" />
         <option value="$PROJECT_DIR$/Move.rb" />
         <option value="$PROJECT_DIR$/Compiler/res/animation.js" />
@@ -174,9 +139,7 @@
         <option value="$PROJECT_DIR$/Compiler/object/object_syntax.txt" />
         <option value="$PROJECT_DIR$/Compiler/code_generator/animation_instructions.rb" />
         <option value="$PROJECT_DIR$/Compiler/log/log_syntax.txt" />
-        <option value="$PROJECT_DIR$/Compiler/code_generator/svg_code_generator.rb" />
         <option value="$PROJECT_DIR$/Compiler/AST.rb" />
-        <option value="$PROJECT_DIR$/Compiler/object/object_AST.rb" />
         <option value="$PROJECT_DIR$/Compiler/object/object_token.rb" />
         <option value="$PROJECT_DIR$/Compiler/object/object_parser.rb" />
         <option value="$PROJECT_DIR$/Compiler/log/log_token.rb" />
@@ -184,12 +147,15 @@
         <option value="$PROJECT_DIR$/Compiler/log/log_scanner.rb" />
         <option value="$PROJECT_DIR$/Compiler/log/log_AST.rb" />
         <option value="$PROJECT_DIR$/Compiler/log/log_parser.rb" />
+        <option value="$PROJECT_DIR$/Compiler/code_generator/svg_code_generator.rb" />
+        <option value="$PROJECT_DIR$/Compiler/object/object_AST.rb" />
+        <option value="$PROJECT_DIR$/Doing.txt" />
+        <option value="$PROJECT_DIR$/Compiler/checker.rb" />
         <option value="$PROJECT_DIR$/Compiler/compiler.rb" />
         <option value="$PROJECT_DIR$/Compiler/symbol_table.rb" />
         <option value="$PROJECT_DIR$/Compiler/test_files/test.object" />
         <option value="$PROJECT_DIR$/Compiler/test_files/test.log" />
-        <option value="$PROJECT_DIR$/Compiler/checker.rb" />
-        <option value="$PROJECT_DIR$/Doing.txt" />
+        <option value="$PROJECT_DIR$/Compiler/code_generator/code_generator.rb" />
       </list>
     </option>
   </component>
@@ -411,21 +377,23 @@
       <workItem from="1551773857703" duration="17485000" />
       <workItem from="1551862709436" duration="16000" />
       <workItem from="1551862815222" duration="19603000" />
+      <workItem from="1551965527167" duration="6696000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="324274000" />
+    <option name="totallyTimeSpent" value="330970000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1738255" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17583893" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.20113315" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20113315" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.48441926" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -469,20 +437,7 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.object" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/Compiler/checker.rb</url>
-          <line>116</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Model/Animo/move.rb" />
-    <entry file="file://$PROJECT_DIR$/Model/Animo/module_for_useful_method.rb" />
     <entry file="file://$PROJECT_DIR$/Model/src/module_for_useful_method.rb" />
     <entry file="file://$PROJECT_DIR$/Model/interface1.rb" />
     <entry file="file://$PROJECT_DIR$/Model/interface2.rb" />
@@ -594,13 +549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/useful_methods.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="30" column="9" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/res/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -612,20 +560,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/animation_instructions.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="88" column="16" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/svg_code_generator.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="95" column="72" selection-start-line="95" selection-start-column="72" selection-end-line="95" selection-end-column="72" />
         </state>
       </provider>
     </entry>
@@ -650,13 +584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Compiler/object/object_AST.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="63" selection-start-line="63" selection-end-line="71" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/object/object_scanner.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -678,66 +605,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Compiler/object/object_parser.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="77" column="14" lean-forward="true" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/log/log_AST.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
+        <state relative-caret-position="1950">
           <caret line="130" column="28" selection-start-line="130" selection-start-column="28" selection-end-line="130" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Compiler/compiler.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="42" selection-start-line="42" selection-end-line="46" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/log/log_parser.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="1425">
           <caret line="95" column="70" selection-start-line="95" selection-start-column="70" selection-end-line="95" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/useful_methods.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/object/object_parser.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="77" column="14" lean-forward="true" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/svg_code_generator.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-215">
+          <caret line="76" selection-start-line="76" selection-end-line="79" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/res/test.animo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/animation_instructions.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="88" column="16" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Doing.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="89" selection-start-line="3" selection-start-column="89" selection-end-line="3" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/object/object_AST.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Compiler/compiler.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/symbol_table.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="11" column="117" selection-start-line="11" selection-start-column="117" selection-end-line="11" selection-end-column="117" />
+        <state relative-caret-position="180">
+          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/test_files/test.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+          <caret line="1" column="22" lean-forward="true" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/test_files/test.object">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="34" lean-forward="true" selection-start-line="3" selection-end-line="4" />
+        <state relative-caret-position="30">
+          <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Compiler/checker.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-99">
-          <caret line="73" column="108" selection-start-line="73" selection-start-column="108" selection-end-line="73" selection-end-column="108" />
+        <state relative-caret-position="345">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Doing.txt">
+    <entry file="file://$PROJECT_DIR$/Compiler/code_generator/code_generator.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="78" lean-forward="true" selection-start-line="9" selection-start-column="78" selection-end-line="9" selection-end-column="78" />
+        <state relative-caret-position="75">
+          <caret line="50" column="45" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
         </state>
       </provider>
     </entry>

@@ -20,13 +20,13 @@ module ObjectAST
   end
 
   class AnimationCommand < Command
-    attr_accessor :object_ID, :action_ID, :formal_parameters_sequence, :expression
+    attr_accessor :object_ID, :action_ID, :formal_parameters_sequence, :instructions
 
-    def initialize object_ID, action_ID, formal_parameters_sequence, expression
+    def initialize object_ID, action_ID, formal_parameters_sequence, instructions
       @object_ID = object_ID
       @action_ID = action_ID
       @formal_parameters_sequence = formal_parameters_sequence
-      @expression = expression
+      @instructions = instructions
     end
 
     def accept visitor, arg=nil
@@ -35,11 +35,11 @@ module ObjectAST
   end
 
   class DescriptionCommand < Command
-    attr_accessor :object_ID, :expression
+    attr_accessor :object_ID, :instructions
 
-    def initialize object_ID, expression
+    def initialize object_ID, instructions
       @object_ID = object_ID
-      @expression = expression
+      @instructions = instructions
     end
 
     def accept visitor, arg=nil
@@ -61,13 +61,13 @@ module ObjectAST
   end
 
 
-  class Expression < (AbstractSyntaxTree::Terminal)
+  class Instructions < (AbstractSyntaxTree::Terminal)
     def initialize value
       super(value)
     end
 
     def accept visitor, arg=nil
-      return visitor.visit_expression(self, arg)
+      return visitor.visit_instructions(self, arg)
     end
   end
 

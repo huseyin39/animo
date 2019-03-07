@@ -1,6 +1,7 @@
 ﻿
 doing :
 - voir comment remplacer les paramètres formels => génération de code mise en place
+ - vérifier le nombre de paramètres durant le checking et gérer les instructions pdt generator
 
 
  - mise en place des fonctions pour décrire les animations
