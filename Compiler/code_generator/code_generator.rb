@@ -1,15 +1,16 @@
+require_relative 'animation_instructions'
+
 class CodeGenerator
-  def initialize filename, symbol_table
-    @filename = filename
+  def initialize symbol_table
     @file = nil
     @symbol_table = symbol_table
     @current_time = 0
     @timestamps = Hash.new #{object_id: [t0, .... t-1, t]}
   end
 
-  def generate ast
+  def generate ast, filename
     begin
-      path = File.join(File.dirname(__FILE__ ), "../res/" + @filename + ".animo")
+      path = File.join(File.dirname(__FILE__ ), "../res/" + filename + ".animo")
       @file = File.new(path, 'w+')
       ast.accept(self, nil)
     ensure
@@ -19,11 +20,13 @@ class CodeGenerator
 
   def visit_program program, arg
     program.program_object.accept(self, nil)
-    #program.program_log.accept(self, nil)
+    program.program_log.accept(self, nil)
     return nil
   end
 
-  #--------------------------------------------------------------------------------------------------------------------
+  # -------------------------------------------------------------------------------------------------------------------
+  # Objects visit
+  # -------------------------------------------------------------------------------------------------------------------
 
   def visit_program_object program_object, arg
     program_object.command.accept(self, nil)
@@ -45,10 +48,9 @@ class CodeGenerator
   def visit_description_command description_command, arg
     instructions = description_command.instructions.accept(self, nil)
     object_id = description_command.object_ID.accept(self, nil) #for the moment unused
-    @file.write(instructions+"\n")
+    AnimationInstructions::ObjectDescription.new(object_id, @file).write(instructions)
   end
 
-  ### tout ça inutile pour l'instant à remove
   def visit_instructions instructions, arg
     if instructions.value.length == 0
       raise 'Instruction is empty'
@@ -57,24 +59,9 @@ class CodeGenerator
     end
   end
 
-  def visit_formal_parameter formal_parameter, arg
-    number_parameters = formal_parameter.parameters.accept(self, nil)
-    return number_parameters
-  end
-
-  def visit_proper_formal_parameter proper_formal_parameter, arg
-    proper_formal_parameter.parameter.accept(self, nil)
-    return 1
-  end
-
-  def visit_proper_formal_parameter_sequence proper_formal_parameter_sequence, arg
-    length = 0
-    length += proper_formal_parameter_sequence.parameter1.accept(self, nil)
-    length += proper_formal_parameter_sequence.parameter2.accept(self, nil)
-    return length
-  end
-
-  #--------------------------------------------------------------------------------------------------------------------
+  # -------------------------------------------------------------------------------------------------------------------
+  # Log visit
+  # -------------------------------------------------------------------------------------------------------------------
 
   def visit_program_log program_log, arg
     program_log.body.accept(self, nil)
@@ -101,49 +88,51 @@ class CodeGenerator
   def visit_timestamp timestamp, arg
     temp_time = timestamp.integer.accept(self, arg).to_i
     unit = timestamp.unit.accept(self, arg)
-    case unit
-    when 'sec'
+    if unit.eql?('sec')
       temp_time = temp_time*1000
+    elsif unit.eql?('msec')
+    else
+      raise 'Unknown unit'
     end
     @current_time = temp_time
-    return nil
   end
 
   def visit_call_command command, arg
     object_id = command.object_id.accept(self, nil)
     action_id = command.action_id.accept(self, nil)
-    number_actual_parameter = command.actual_parameter.accept(self, nil)
-    number_formal_parameters = @symbol_table.lookup(object_id, action_id)
-    if number_formal_parameters.nil?
-      raise "The animation #{action_id} has not been declared for the object #{object_id} in the object file"
-    elsif number_actual_parameter != number_formal_parameters
-      raise "The animation #{action_id} requires #{number_formal_parameters} parameters, #{number_actual_parameter} were given"
-    else
-      return nil
+    actual_parameters = command.actual_parameter.accept(self, nil)
+    animation_information = @symbol_table.lookup(object_id, action_id)
+    insert_timestamp(object_id)
+    if !(animation_information.nil?)
+      AnimationInstructions::Animation.new(object_id, @file).write(animation_information, actual_parameters)
     end
   end
 
   def visit_actual_parameter actual_parameter, arg
-    number_parameters = actual_parameter.parameters.accept(self, nil)
+    parameters_id = actual_parameter.parameters.accept(self, nil)
   end
 
   def visit_proper_actual_parameter proper_actual_parameter, arg
-    proper_actual_parameter.parameter.accept(self, nil)
-    return 1
+    parameter =  proper_actual_parameter.parameter.accept(self, nil)
+    return [parameter]
   end
 
   def visit_proper_actual_parameter_sequence proper_actual_parameter_sequence, arg
-    length = 0
-    length += proper_actual_parameter_sequence.parameter1.accept(self, nil)
-    length += proper_actual_parameter_sequence.parameter2.accept(self, nil)
-    return length
+    parameters = []
+    param = proper_actual_parameter_sequence.parameter1.accept(self, nil)
+    parameters.push(*param)
+    param = proper_actual_parameter_sequence.parameter2.accept(self, nil)
+    parameters.push(*param)
+    return parameters
   end
 
   def visit_parameter parameter, arg
     return parameter.parameter_ast.accept(self, nil)
   end
 
-  #--------------------------------------------------------------------------------------------------------------------
+  # -------------------------------------------------------------------------------------------------------------------
+  # Terminals visit
+  # -------------------------------------------------------------------------------------------------------------------
 
   def visit_identifier id, arg
     return id.value
@@ -158,7 +147,16 @@ class CodeGenerator
   end
 
   def visit_unit unit, arg
-    return nil
+    return unit.value
+  end
+
+  #Method to insert a timestamp for a give object_id
+  def insert_timestamp object_id
+    if @timestamps[object_id].nil?
+      @timestamps[object_id] = [@current_time]
+    else
+      @timestamps[object_id] << @current_time
+    end
   end
 
 end

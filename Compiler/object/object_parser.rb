@@ -54,9 +54,7 @@ class ObjectParser
 
   def parse_description
     object_ID_AST = parse_identifier
-    accept(:LDOUBLEBRACKET)
-    expression_AST = parse_expression
-    accept(:RDOUBLEBRACKET)
+    expression_AST = parse_instructions
     return ObjectAST::DescriptionCommand.new(object_ID_AST, expression_AST)
   end
 
@@ -64,19 +62,14 @@ class ObjectParser
     object_ID_AST = parse_identifier
     action_ID_AST = parse_identifier
     parameters_AST = parse_formal_parameter
-    accept(:LDOUBLEBRACKET)
-    expression_AST = parse_expression
-    accept(:RDOUBLEBRACKET)
+    expression_AST = parse_instructions
     return ObjectAST::AnimationCommand.new(object_ID_AST, action_ID_AST, parameters_AST, expression_AST)
   end
 
 
-  def parse_expression
-    value = ''
-    while !(@currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:RDOUBLEBRACKET]))
-      value << @currentToken.value
-      acceptIt
-    end
+  def parse_instructions
+    value = @currentToken.value
+    accept(:INSTRUCTIONS)
     return ObjectAST::Instructions.new(value)
   end
 

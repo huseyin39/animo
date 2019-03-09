@@ -1,15 +1,18 @@
 
 
-Program ::= [Declaration ';']+
-Declaration ::= Identifier '='  Type ',' '"' Filename '"'
-Type ::= move | chart
-Filename ::=  Letter [Letter|[0-9]|_]* '.svg' (do we allow space) ?
+Object-Program ::= Command+
+Command ::= DescriptionCommand | AnimationCommand
+DescriptionCommand ::= 'Description' Identifier Instructions
+AnimationCommand ::= 'Animation' Identifier '(' Formal-Parameter ')' Instructions
+Instructions ::= '{{' Unicode-Character* '}}'
+Formal-Parameter ::= Identifier [',' Identifier]* | €
 Identifier ::= Letter [Letter|[0-9]|_]*
+
 
 Lexical grammar
 
-Token ::=
-
+Token ::= Identifier | Animation | Description | , | ( | ) | Instructions
 
 Ex :
-identifier = type, "chemin";
+Description object_ID {{ object_ID = rectangle }}
+Animation object_ID (x,y) {{object_ID.set(x,y) }}

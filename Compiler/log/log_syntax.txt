@@ -5,23 +5,20 @@ Nonterminals symbols:
 	- Program (start symbol), Body, Timestamp, Time-Value, Unit, Identifier, Action, Parameter-Value
 Production rules :
 
-Program ::= begin Body end
+Log-Program ::= begin Body end
 Body ::= [Line ';']+
-Line ::= [Timestamp Description]
-Description ::= Identifier [BinaryExpression | UnaryExpression]
-UnaryExpression ::= UnaryAction '('Parameter_value')'
-BinaryExpression ::= BinaryAction '('Parameter_value, Parameter_value')'
+Line ::= [Timestamp ':' CallCommand]
 Timestamp ::= Integer Unit
 Unit ::= sec | msec
-
+CallCommand ::= Identifier Identifier '(' Actual-parameter ')'
+Actual-Parameter ::= Parameter [',' Parameter]* | €
+Parameter ::= '[[' UnicodeCharacter ']]' | [0-9]*
 
 
 
 Lexical grammar:
 
 Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | ) | - // | EOT ?
-UnaryAction ::=
-BinaryAction ::= move |
 Parameter_Value ::=  -Integer | Integer | E(empty)  //For the moment either Integer or nothing (to add such as transit..)
 Identifier ::= Letter [Letter|[0-9]|_]*
 Integer ::= [0-9]+

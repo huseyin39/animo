@@ -1,4 +1,5 @@
 begin
 1 sec : robot_1 move (44, 55);
-
+2 sec : robot_1 move ([[treas]], 55);
+4 sec : robotsse tior ();
 end

@@ -51,8 +51,8 @@ class LogParser
   def parse_line
     timestamp_AST = parse_timestamp
     accept(:COLON)
-    description_AST = parse_description
-    return LogAST::SingleLine.new(timestamp_AST, description_AST)
+    call_command_AST = parse_call_command
+    return LogAST::SingleLine.new(timestamp_AST, call_command_AST)
   end
 
   def parse_timestamp
@@ -73,7 +73,7 @@ class LogParser
     return LogAST::IntegerLiteral.new(time_value)
   end
 
-  def parse_description
+  def parse_call_command
     object_id_AST = parse_identifier
     action_id_AST = parse_identifier
     actual_parameters_AST = parse_actual_parameter
@@ -109,9 +109,9 @@ class LogParser
       string_AST = parse_string
       accept(:RSTRING)
       return string_AST
-    when LOG_TOKEN_KINDS[:IDENTIFIER]
-      id_AST =  parse_identifier
-      return id_AST
+    # when LOG_TOKEN_KINDS[:IDENTIFIER] #is it normal?
+    #   id_AST =  parse_identifier
+    #   return id_AST
     when LOG_TOKEN_KINDS[:INTEGER]
       int_AST = parse_integer
       return int_AST

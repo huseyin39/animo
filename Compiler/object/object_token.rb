@@ -18,12 +18,9 @@ end
 OBJECT_TOKEN_KINDS = {IDENTIFIER: 0,
                       ANIMATION: 1,
                       DESCRIPTION: 2,
-                      CHAR: 3, #characters differents from [a-zA-Z0-9] () ,;
-                      SEMICOLON: 4,
-                      COMMA: 5,
-                      CHARACTER: 6,
-                      LPARENTHESIS: 7,
-                      RPARENTHESIS: 8,
-                      LDOUBLEBRACKET: 9,
-                      RDOUBLEBRACKET: 10,
-                      EOF: 11}
+                      SEMICOLON: 3,
+                      COMMA: 4,
+                      LPARENTHESIS: 5,
+                      RPARENTHESIS: 6,
+                      INSTRUCTIONS: 7,
+                      EOF: 8}

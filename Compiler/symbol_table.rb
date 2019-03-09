@@ -27,10 +27,12 @@ class SymbolTable
   end
 
   def lookup id, action_id
-    if @table[id].nil?
+    if @table[id].nil? #it means the object_id does not have any animation in the table
       return nil
+    elsif @table[id][action_id].nil? #it means this action is not defined for this object_id
+      return 'undefined'
     else
-      return @table[id][action_id][0]
+      return @table[id][action_id]
     end
   end
 end

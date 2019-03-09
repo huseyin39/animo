@@ -36,12 +36,8 @@ def parse_log path
   return ast
 end
 
-
-
-
-
 ast_object = parse_object('test.object')
 ast_log = parse_log('test.log')
 ast = AbstractSyntaxTree::Program.new(ast_object, ast_log)
 symbol_table = Checker.new().check(ast)
-CodeGenerator.new('test', symbol_table).generate(ast)
+CodeGenerator.new(symbol_table).generate(ast, 'test')

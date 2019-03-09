@@ -4,8 +4,6 @@ class ObjectScanner
   def initialize file
     @file = file
     @current_char = file.readchar # fetch the first char
-
-    #Current token
     @current_kind = nil
     @current_value = StringIO.new #StringBuffer
   end
@@ -50,15 +48,24 @@ class ObjectScanner
     return ObjectToken.new(@current_kind, @current_value.string)
   end
 
-  def scan_token
-    # if is_numeric?(@current_char) #Integer
-    #   takeIt
-    #   while is_numeric?(@current_char)
-    #     takeIt
-    #   end
-    #   return OBJECT_TOKEN_KINDS[:INTEGER]
-    # end
+  def scan_string
+    string = ""
+    if @current_char.eql?('}')
+      fetch_next_char
+      if @current_char.eql?('}')
+        fetch_next_char
+        return ""
+      else
+        string << "{"
+        string << scan_string
+      end
+    end
+    string << @current_char
+    fetch_next_char
+    string << scan_string
+  end
 
+  def scan_token
     if @current_char =~ /[a-zA-Z]/
       takeIt
       while @current_char =~ /\w/
@@ -68,10 +75,6 @@ class ObjectScanner
     end
 
     case @current_char
-    when ';'
-      takeIt
-      return OBJECT_TOKEN_KINDS[:SEMICOLON]
-
     when ','
       takeIt
       return OBJECT_TOKEN_KINDS[:COMMA]
@@ -85,29 +88,20 @@ class ObjectScanner
       return OBJECT_TOKEN_KINDS[:LPARENTHESIS]
 
     when '{'
-      takeIt
+      fetch_next_char
       if @current_char.eql?('{')
-        takeIt
-        return OBJECT_TOKEN_KINDS[:LDOUBLEBRACKET]
+        fetch_next_char
+        string = scan_string
+        @current_value << string
+        return OBJECT_TOKEN_KINDS[:INSTRUCTIONS]
       else
-        return OBJECT_TOKEN_KINDS[:CHAR]
+        raise 'Unexpected character: {. YOu meant {{?'
       end
 
-    when '}'
-      takeIt
-      if @current_char.eql?('}')
-        takeIt
-        return OBJECT_TOKEN_KINDS[:RDOUBLEBRACKET]
-      else
-        return OBJECT_TOKEN_KINDS[:CHAR]
-      end
-    end
-
-    if @current_char.eql?('$$')
+    when '$$'
       return OBJECT_TOKEN_KINDS[:EOF]
     end
 
-    takeIt
-    return OBJECT_TOKEN_KINDS[:CHAR]
+    raise "Unexpected character: #{@current_char}"
   end
 end

@@ -1,7 +1,13 @@
 ﻿
+
+
+
+
 doing :
-- voir comment remplacer les paramètres formels => génération de code mise en place
- - vérifier le nombre de paramètres durant le checking et gérer les instructions pdt generator
+- paramètre --> pourquois pas réels ou négatifs ou booléens --> peutêtre mettre identifier?
+- paramètre string --> mettre des guillemets dans la génération du code
+- insertion de la gestion du temps dans les instructions
+
 
 
  - mise en place des fonctions pour décrire les animations
@@ -17,6 +23,9 @@ doing :
 remplacer parameter-value par des mots-clés : on, off ...
 
 done :
+- attention lorsque dans le log file un object sans description ni action apparaît, error is raised
+- attention newline dans les instructions ...
+- voir comment remplacer les paramètres formels => génération de code mise en place
 - Plusieurs ID dispo dans le log; 'object' sert à les sélectionner !
 handled case EOF occurs before end of Line or declaration
 type checking
@@ -27,4 +36,4 @@ checker que les actions dans les fichiers .log correspondent bien au action déf
 calcul du dernier angle
 code generator pour svg : mettre en place le calcul des prochains points et angles: (angles incorrects)
 régler le problème des chemins
-calcul des angles attention (division par 0)
+calcul des agles attention (division par 0)n

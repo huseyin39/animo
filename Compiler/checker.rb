@@ -20,6 +20,8 @@ class Checker
   end
 
   #--------------------------------------------------------------------------------------------------------------------
+  # Object visit
+  # -------------------------------------------------------------------------------------------------------------------
 
   def visit_program_object program_object, arg
     program_object.command.accept(self, nil)
@@ -71,10 +73,12 @@ class Checker
     len, param = proper_formal_parameter_sequence.parameter2.accept(self, nil)
     length += len
     parameters.push(*param)
-    return length
+    return length, parameters
   end
 
   #--------------------------------------------------------------------------------------------------------------------
+  # Log visit
+  # -------------------------------------------------------------------------------------------------------------------
 
   def visit_program_log program_log, arg
     program_log.body.accept(self, nil)
@@ -100,14 +104,18 @@ class Checker
 
   def visit_timestamp timestamp, arg
     temp_time = timestamp.integer.accept(self, arg).to_i
-    if (@current_time.nil?)
-      @current_time = temp_time
-    elsif (temp_time < @current_time)
-      raise 'Error: Time must be increasing'
+    unit = timestamp.unit.accept(self, arg)
+    if unit.eql?('sec')
+      temp_time = temp_time*1000
+    elsif unit.eql?('msec')
     else
-      @current_time = temp_time
+      raise 'Unknown unit'
     end
-    timestamp.unit.accept(self, arg)
+    if (@current_time.nil? || temp_time >= @current_time)
+      @current_time = temp_time
+    else
+      raise 'Error: Time must be increasing'
+    end
     return nil
   end
 
@@ -115,13 +123,18 @@ class Checker
     object_id = command.object_id.accept(self, nil)
     action_id = command.action_id.accept(self, nil)
     number_actual_parameter = command.actual_parameter.accept(self, nil)
-    number_formal_parameters = @symbol_table.lookup(object_id, action_id)
-    if number_formal_parameters.nil?
+    animation_information = @symbol_table.lookup(object_id, action_id)
+    if animation_information.eql?('undefined')
       raise "The animation #{action_id} has not been declared for the object #{object_id} in the object file"
-    elsif number_actual_parameter != number_formal_parameters
-      raise "The animation #{action_id} requires #{number_formal_parameters} parameters, #{number_actual_parameter} were given"
+    elsif animation_information.nil?
+      #It means no object ID so we do not do anything
     else
-      return nil
+        number_formal_parameters = animation_information[0]
+        if number_actual_parameter != number_formal_parameters
+          raise "The animation #{action_id} requires #{number_formal_parameters} parameters, #{number_actual_parameter} were given"
+        else
+          return nil
+        end
     end
   end
 
@@ -146,6 +159,8 @@ class Checker
   end
 
   #--------------------------------------------------------------------------------------------------------------------
+  # Terminals visit
+  # -------------------------------------------------------------------------------------------------------------------
 
   def visit_identifier id, arg
     return id.value
@@ -160,6 +175,6 @@ class Checker
   end
 
   def visit_unit unit, arg
-    return nil
+    return unit.value
   end
 end
