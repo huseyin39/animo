@@ -14,15 +14,6 @@ class LogToken
     end
     #puts "Log -- Kind : #{@kind} value : #{@value}"
   end
-
-  #To check the kind of the currentToken
-  def is_a? kind #unused
-    if @kind == kind
-      return true
-    else
-      raise "Wrong type"
-    end
-  end
 end
 
 LOG_TOKEN_KINDS = {INTEGER: 0,

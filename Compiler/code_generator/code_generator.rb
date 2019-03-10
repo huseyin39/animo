@@ -5,7 +5,7 @@ class CodeGenerator
     @file = nil
     @symbol_table = symbol_table
     @current_time = 0
-    @timestamps = Hash.new #{object_id: [t0, .... t-1, t]}
+    @timestamps = Hash.new #{object_id: [t0, .... t-1, t]} #not implemented yet
   end
 
   def generate ast, filename
@@ -104,7 +104,7 @@ class CodeGenerator
     animation_information = @symbol_table.lookup(object_id, action_id)
     insert_timestamp(object_id)
     if !(animation_information.nil?)
-      AnimationInstructions::Animation.new(object_id, @file).write(animation_information, actual_parameters)
+      AnimationInstructions::Animation.new(object_id, @file).write(animation_information, actual_parameters, @current_time)
     end
   end
 

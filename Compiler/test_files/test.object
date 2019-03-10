@@ -1,9 +1,5 @@
-Description aaa {{
-sddsd
-}}
+Description aaa {{sddsd}}
 
-Animation robot_1 move (ree, re) {{ #re is the second parameter, #ree is the first one
-
-}}
+Animation robot_1 move (ree, re) {{ #re is the second parameter, #ree is the first one, at time '#t' mses}}
 Animation robot_1 azerty () {{ss}}
 Animation aaa test (er, sre) {{ ess }}

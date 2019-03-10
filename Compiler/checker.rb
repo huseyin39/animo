@@ -9,12 +9,12 @@ class Checker
 
   def check ast
     ast.accept(self, nil)
+    puts 'Contextual analysis done'
     return @symbol_table
   end
 
   def visit_program program, arg
     program.program_object.accept(self, nil)
-    puts @symbol_table.to_s
     program.program_log.accept(self, nil)
     return nil
   end
@@ -61,6 +61,9 @@ class Checker
 
   def visit_proper_formal_parameter proper_formal_parameter, arg
     parameter =  proper_formal_parameter.parameter.accept(self, nil)
+    if parameter.eql?('t')
+      raise 't cannot be used as a parameter'
+    end
     return 1, [parameter]
   end
 

@@ -18,13 +18,8 @@ Parameter ::= '[[' UnicodeCharacter ']]' | [0-9]*
 
 Lexical grammar:
 
-Token ::= Action | Parameter-Value | Integer | Unit | Identifier | begin | end | : | ; | , | ( | ) | - // | EOT ?
-Parameter_Value ::=  -Integer | Integer | E(empty)  //For the moment either Integer or nothing (to add such as transit..)
-Identifier ::= Letter [Letter|[0-9]|_]*
-Integer ::= [0-9]+
-Separator ::= Space | EndOFLine
-(Maybe add comments)
-
+Token ::=  “[[“UnicodeCharacter “]]” | [“-“]{0,1} [0-9]+ | Letter [Letter|[0-9]|_]* | ‘msec’ | ‘sec’ | “begin” | “end” | “:” | “;” | “,” | “(“ | “)”
+Separator ::= Space | End_of_line
 
 example:
 

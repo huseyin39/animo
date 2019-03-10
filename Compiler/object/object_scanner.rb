@@ -1,4 +1,4 @@
-require_relative 'object_token'
+require_relative '../token'
 
 class ObjectScanner
   def initialize file
@@ -38,14 +38,14 @@ class ObjectScanner
     lookAhead =~ /\d/
   end
 
-  def scan
+  def scan_object
     while @current_char =~ /[[:space:]]/
       takeIt
     end
     @current_value = StringIO.new
     @current_kind = scan_token
     #puts "Object : Kind : #{@current_kind} value : #{@current_value.string}"
-    return ObjectToken.new(@current_kind, @current_value.string)
+    return Token.new(@current_kind, @current_value.string)
   end
 
   def scan_string

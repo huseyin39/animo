@@ -9,7 +9,7 @@ class LogParser
   end
 
   def parse_log
-    @currentToken = @scanner.scan
+    @currentToken = @scanner.scan_log
     program_log_AST = parse_program_log
     if (! @currentToken.kind.eql?(LOG_TOKEN_KINDS[:EOF]))
       raise 'Syntactic error'
@@ -20,14 +20,14 @@ class LogParser
 
   def accept (expectedToken)
     if @currentToken.kind.eql? LOG_TOKEN_KINDS[expectedToken]
-      @currentToken = @scanner.scan
+      @currentToken = @scanner.scan_log
     else
       raise 'Syntactic error'
     end
   end
 
   def acceptIt
-    @currentToken = @scanner.scan
+    @currentToken = @scanner.scan_log
   end
 
   def parse_program_log

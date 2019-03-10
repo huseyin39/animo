@@ -9,7 +9,7 @@ class ObjectParser
   end
 
   def parse_object
-    @currentToken = @scanner.scan
+    @currentToken = @scanner.scan_object
     program_object_AST = parse_program_object
     if (! @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[:EOF]))
       raise 'Syntactic error'
@@ -20,7 +20,7 @@ class ObjectParser
 
   def accept (expectedToken)
     if @currentToken.kind.eql?(OBJECT_TOKEN_KINDS[expectedToken])
-      @currentToken = @scanner.scan
+      @currentToken = @scanner.scan_object
     else
       puts @currentToken.kind
       raise 'Syntactic error'
@@ -28,7 +28,7 @@ class ObjectParser
   end
 
   def acceptIt
-    @currentToken = @scanner.scan
+    @currentToken = @scanner.scan_object
   end
 
   def parse_program_object

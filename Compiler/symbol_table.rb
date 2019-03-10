@@ -15,7 +15,6 @@ class SymbolTable
     key = attr.keys[0]
     value = attr[key]
     if (@table.has_key?(id))
-      puts @table[id].class
       if (@table[id][key]).nil?
         @table[id][key] = value
       else

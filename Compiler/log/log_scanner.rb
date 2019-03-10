@@ -1,4 +1,4 @@
-require_relative 'log_token'
+require_relative '../token'
 
 class LogScanner
 
@@ -41,13 +41,13 @@ class LogScanner
     lookAhead =~ /\d/
   end
 
-  def scan
+  def scan_log
     while @current_char =~ /[[:space:]]/
       takeIt
     end
     @current_value = StringIO.new
     @current_kind = scan_token
-    return LogToken.new(@current_kind, @current_value.string)
+    return Token.new(@current_kind, @current_value.string)
   end
 
   def scan_separator #is it used?
@@ -133,10 +133,3 @@ class LogScanner
     return LOG_TOKEN_KINDS[:INTEGER]
   end
 end
-
-
-
-s = StringIO.new
-s << 'a'
-s << 'b'
-#puts s.string

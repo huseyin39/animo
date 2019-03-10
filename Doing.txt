@@ -1,12 +1,11 @@
 ﻿
-
-
-
-
 doing :
+- diagramme de classe (obligatoire)
+- faire une image représentant le procédé global
+- les positions
 - paramètre --> pourquois pas réels ou négatifs ou booléens --> peutêtre mettre identifier?
-- paramètre string --> mettre des guillemets dans la génération du code
-- insertion de la gestion du temps dans les instructions
+- faire un exemple
+- les commentaires si possible
 
 
 
